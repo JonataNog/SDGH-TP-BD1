@@ -3,4 +3,5 @@ module SistemaGH {
 	
 	opens application to javafx.graphics, javafx.fxml;
 	requires java.sql;
+	requires javafx.fxml;
 }
