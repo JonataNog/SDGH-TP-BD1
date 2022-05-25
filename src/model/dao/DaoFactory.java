@@ -1,9 +1,12 @@
 package model.dao;
 
+import db.DB;
+import model.dao.impl.ClinicDaoJDBC;
+
 public class DaoFactory {
 
 	public static ClinicDao createClinicDao() {
-		return null;
+		return new ClinicDaoJDBC(DB.getConnection());
 	}
 	
 	public static ConsultationDao createConsultationDao() {

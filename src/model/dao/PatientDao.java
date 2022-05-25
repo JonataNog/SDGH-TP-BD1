@@ -9,7 +9,7 @@ public interface PatientDao {
 	void insert(Patient obj);
 	void update(Patient obj);
 	void deleteByCnpj(Patient obj);
-	Patient findByCpf(Integer protocol);
+	Patient findByCpf(Integer cpf);
 	List<Patient> findAll();
 	
 }

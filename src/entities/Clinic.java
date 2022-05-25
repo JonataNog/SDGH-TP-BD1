@@ -8,6 +8,9 @@ public class Clinic {
 	private String local;
 	private String name;
 	
+	public Clinic() {
+	}
+	
 	public Clinic(Integer cnpj, String local, String name) {
 		this.cnpj = cnpj;
 		this.local = local;

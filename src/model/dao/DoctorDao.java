@@ -9,7 +9,7 @@ public interface DoctorDao {
 	void insert(Doctor obj);
 	void update(Doctor obj);
 	void deleteByCnpj(Doctor obj);
-	Doctor findByCrm(Integer protocol);
+	Doctor findByCrm(Integer crm);
 	List<Doctor> findAll();
 
 }
