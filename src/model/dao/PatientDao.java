@@ -2,7 +2,7 @@ package model.dao;
 
 import java.util.List;
 
-import entities.Patient;
+import model.entities.Patient;
 
 public interface PatientDao {
 

@@ -8,8 +8,8 @@ import java.util.List;
 
 import db.DB;
 import db.DbException;
-import entities.Clinic;
 import model.dao.ClinicDao;
+import model.entities.Clinic;
 
 public class ClinicDaoJDBC implements ClinicDao {
 	

@@ -2,7 +2,7 @@ package model.dao;
 
 import java.util.List;
 
-import entities.Consultation;
+import model.entities.Consultation;
 
 public interface ConsultationDao {
 	

@@ -2,7 +2,7 @@ package model.dao;
 
 import java.util.List;
 
-import entities.Clinic;
+import model.entities.Clinic;
 
 public interface ClinicDao {
 	
