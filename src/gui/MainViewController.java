@@ -35,7 +35,7 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void onMenuItemClinicAction() {
-		System.out.println("onMenuItemClinicAction");
+		loadView("/gui/ClinicList.fxml");
 	}
 	
 	@FXML
