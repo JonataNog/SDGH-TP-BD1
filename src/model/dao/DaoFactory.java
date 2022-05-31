@@ -21,4 +21,16 @@ public class DaoFactory {
 		return null;
 	}
 	
+	public static ParentageDao createParentageDao() {
+		return null;
+	}
+	
+	public static HistoricParentageDao createHistoricParentageDao() {
+		return null;
+	}
+	
+	public static HistoricPatientDao createHistoricPatientDao() {
+		return null;
+	}
+	
 }
