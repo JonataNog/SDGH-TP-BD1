@@ -5,13 +5,13 @@ import java.util.Objects;
 
 public class Patient {
 	
-	private Integer cpf;
+	private String cpf;
 	private String name;
 	private String convenio;
 	private String sex;
 	private String historic[];
 	
-	public Patient(Integer cpf, String name, String convenio, String sex, String[] historic) {
+	public Patient(String cpf, String name, String convenio, String sex, String[] historic) {
 		this.cpf = cpf;
 		this.name = name;
 		this.convenio = convenio;
@@ -19,11 +19,11 @@ public class Patient {
 		this.historic = historic;
 	}
 
-	public Integer getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(Integer cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 
