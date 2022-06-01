@@ -53,7 +53,7 @@ public class PatientListController implements Initializable{
 	@FXML 
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		createDialogForm("/gui/ClinicForm.fxml", parentStage);
+		createDialogForm("/gui/PatientForm.fxml", parentStage);
 	}
 	
 	public void setPatientService(PatientService service) {

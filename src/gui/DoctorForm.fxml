@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane prefHeight="208.0" prefWidth="584.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17">
+<AnchorPane prefHeight="209.0" prefWidth="562.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane prefHeight="151.0" prefWidth="553.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
         <columnConstraints>
@@ -37,7 +36,7 @@
                   <Insets left="5.0" />
                </padding>
             </Label>
-            <Label text="Convenio" GridPane.rowIndex="2">
+            <Label text="Specialization" GridPane.rowIndex="2">
                <padding>
                   <Insets left="5.0" />
                </padding>
