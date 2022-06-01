@@ -18,9 +18,13 @@ public class HistoricParentage {
 	public void setHistoric(String historic) {
 		this.historic = historic;
 	}
-	
-	public String getParentageCpf() {
-		return parentage.getParentageCpf();
+
+	public Parentage getParentage() {
+		return parentage;
+	}
+
+	public void setParentage(Parentage parentage) {
+		this.parentage = parentage;
 	}
 	
 }

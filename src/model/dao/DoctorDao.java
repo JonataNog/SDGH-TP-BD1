@@ -8,8 +8,8 @@ public interface DoctorDao {
 	
 	void insert(Doctor obj);
 	void update(Doctor obj);
-	void deleteByCnpj(Doctor obj);
-	Doctor findByCrm(Integer crm);
+	void deleteByCrm(Doctor obj);
+	Doctor findByCrm(String crm);
 	List<Doctor> findAll();
 
 }

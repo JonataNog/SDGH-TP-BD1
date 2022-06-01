@@ -9,7 +9,7 @@ public interface ClinicDao {
 	void insert(Clinic obj);
 	void update(Clinic obj);
 	void deleteByCnpj(Clinic obj);
-	Clinic findByCnpj(Integer cnpj);
+	Clinic findByCnpj(String cnpj);
 	List<Clinic> findAll();
 
 }

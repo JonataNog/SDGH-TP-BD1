@@ -21,9 +21,13 @@ public class HistoricPatient {
 	public void setHistoric(String[] historic) {
 		this.historic = historic;
 	}
-	
-	public String getPatientCpf() {
-		return patient.getCpf();
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 	@Override

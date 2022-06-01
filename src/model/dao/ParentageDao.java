@@ -9,7 +9,7 @@ public interface ParentageDao {
 	void insert(Parentage obj);
 	void update(Parentage obj);
 	void delete(Parentage obj);
-	Parentage findByCpfName(String cpf, String name);
+	Parentage findByCpfs(String cpf);
 	List<Parentage> findAll();
 	
 }

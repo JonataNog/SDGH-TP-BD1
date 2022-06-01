@@ -1,6 +1,5 @@
 package model.entities;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class Patient {
@@ -9,14 +8,15 @@ public class Patient {
 	private String name;
 	private String convenio;
 	private String sex;
-	private String historic[];
 	
-	public Patient(String cpf, String name, String convenio, String sex, String[] historic) {
+	public Patient() {
+	}
+	
+	public Patient(String cpf, String name, String convenio, String sex) {
 		this.cpf = cpf;
 		this.name = name;
 		this.convenio = convenio;
 		this.sex = sex;
-		this.historic = historic;
 	}
 
 	public String getCpf() {
@@ -31,7 +31,7 @@ public class Patient {
 		return name;
 	}
 
-	public void setNome(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -49,14 +49,6 @@ public class Patient {
 
 	public void setSex(String sex) {
 		this.sex = sex;
-	}
-
-	public String[] getHistoric() {
-		return historic;
-	}
-
-	public void setHistoric(String[] historic) {
-		this.historic = historic;
 	}
 
 	@Override
@@ -78,8 +70,7 @@ public class Patient {
 
 	@Override
 	public String toString() {
-		return "Patient [cpf=" + cpf + ", name=" + name + ", convenio=" + convenio + ", sex=" + sex + ", historic="
-				+ Arrays.toString(historic) + "]";
+		return "Patient [cpf=" + cpf + ", name=" + name + ", convenio=" + convenio + ", sex=" + sex + "]";
 	}
 
 }

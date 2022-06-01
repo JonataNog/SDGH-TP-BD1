@@ -4,33 +4,23 @@ import java.util.Objects;
 
 public class Clinic {
 
-	private Integer cnpj;
-	private String local;
+	private String cnpj;
 	private String name;
 	
 	public Clinic() {
 	}
 	
-	public Clinic(Integer cnpj, String local, String name) {
+	public Clinic(String cnpj, String name) {
 		this.cnpj = cnpj;
-		this.local = local;
 		this.name = name;
 	}
 
-	public Integer getCnpj() {
+	public String getCnpj() {
 		return cnpj;
 	}
 
-	public void setCnpj(Integer cnpj) {
+	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
-	}
-
-	public String getLocal() {
-		return local;
-	}
-
-	public void setLocal(String local) {
-		this.local = local;
 	}
 
 	public String getName() {
@@ -60,7 +50,7 @@ public class Clinic {
 
 	@Override
 	public String toString() {
-		return "Clinic [cnpj=" + cnpj + ", local=" + local + ", name=" + name + "]";
+		return "Clinic [cnpj=" + cnpj + ", name=" + name + "]";
 	}
-	
+
 }

@@ -4,19 +4,22 @@ import java.util.Objects;
 
 public class Doctor {
 	
-	private Integer crm;
+	private String crm;
 	private String name;
 	
-	public Doctor(Integer crm, String name) {
+	public Doctor() {
+	}
+	
+	public Doctor(String crm, String name) {
 		this.crm = crm;
 		this.name = name;
 	}
 
-	public Integer getCrm() {
+	public String getCrm() {
 		return crm;
 	}
 
-	public void setCrm(Integer crm) {
+	public void setCrm(String crm) {
 		this.crm = crm;
 	}
 
@@ -24,7 +27,7 @@ public class Doctor {
 		return name;
 	}
 
-	public void setNome(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

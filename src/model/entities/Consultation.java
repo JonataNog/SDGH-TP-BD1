@@ -10,14 +10,24 @@ public class Consultation {
 	private String laudo;
 	private Date date;
 	
-	public Consultation(Integer protocol, String medication, String laudo, Date date) {
-		super();
+	private Doctor doctor;
+	private Clinic clinic;
+	private Patient patient;
+	
+	public Consultation() {
+	}
+	
+	public Consultation(Integer protocol, String medication, String laudo, Date date, Doctor doctor, Clinic clinic,
+			Patient patient) {
 		this.protocol = protocol;
 		this.medication = medication;
 		this.laudo = laudo;
 		this.date = date;
+		this.doctor = doctor;
+		this.clinic = clinic;
+		this.patient = patient;
 	}
-
+	
 	public Integer getProtocol() {
 		return protocol;
 	}
@@ -46,8 +56,32 @@ public class Consultation {
 		return date;
 	}
 
-	public void setData(Date date) {
+	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public Doctor getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+
+	public Clinic getClinic() {
+		return clinic;
+	}
+
+	public void setClinic(Clinic clinic) {
+		this.clinic = clinic;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 	@Override
@@ -70,7 +104,7 @@ public class Consultation {
 	@Override
 	public String toString() {
 		return "Consultation [protocol=" + protocol + ", medication=" + medication + ", laudo=" + laudo + ", date="
-				+ date + "]";
+				+ date + ", doctor=" + doctor + ", clinic=" + clinic + ", patient=" + patient + "]";
 	}
 
 }

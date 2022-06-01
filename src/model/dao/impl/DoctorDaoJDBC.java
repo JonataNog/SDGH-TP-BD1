@@ -8,27 +8,27 @@ import java.util.List;
 
 import db.DB;
 import db.DbException;
-import model.dao.ClinicDao;
-import model.entities.Clinic;
+import model.dao.DoctorDao;
+import model.entities.Doctor;
 
-public class ClinicDaoJDBC implements ClinicDao {
+public class DoctorDaoJDBC implements DoctorDao {
 	
 	private Connection conn;
-	
-	public ClinicDaoJDBC(Connection conn) {
+
+	public DoctorDaoJDBC(Connection conn) {
 		this.conn = conn;
 	}
 
 	@Override
-	public void insert(Clinic obj) {
+	public void insert(Doctor obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("INSERT INTO clinica "
-										 + "(Cnpj, Nome) "
+			st = conn.prepareStatement("INSERT INTO doctor "
+										 + "(Crm, Nome) "
 										 + "VALUES "
 										 + "(?, ?)");
-			st.setString(1, obj.getCnpj());
-			st.setString(2, obj.getName());
+			st.setString(1, obj.getCrm());
+			st.setString(3, obj.getName());
 			st.executeUpdate();
 		}
 		catch(SQLException e) {
@@ -37,17 +37,18 @@ public class ClinicDaoJDBC implements ClinicDao {
 		finally {
 			DB.closeStatement(st);
 		}
+		
 	}
 
 	@Override
-	public void update(Clinic obj) {
+	public void update(Doctor obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("UPDATE clinica " 
+			st = conn.prepareStatement("UPDATE doctor " 
 										+ "SET Nome = ? "
-										+ "WHERE Cnpj = ?");
+										+ "WHERE Crm = ?");
 			st.setString(1, obj.getName());
-			st.setString(2, obj.getCnpj());
+			st.setString(2, obj.getCrm());
 			st.executeUpdate();
 			
 		}
@@ -57,14 +58,15 @@ public class ClinicDaoJDBC implements ClinicDao {
 		finally {
 			DB.closeStatement(st);
 		}
+		
 	}
 
 	@Override
-	public void deleteByCnpj(Clinic obj) {
+	public void deleteByCrm(Doctor obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("DELETE FROM clinica WHERE Cnpj = ?");
-			st.setString(1, obj.getCnpj());
+			st = conn.prepareStatement("DELETE FROM doctor WHERE Crm = ?");
+			st.setString(1, obj.getCrm());
 			st.executeUpdate();
 		}
 		catch(SQLException e) {
@@ -73,20 +75,21 @@ public class ClinicDaoJDBC implements ClinicDao {
 		finally {
 			DB.closeStatement(st);
 		}
+		
 	}
 
 	@Override
-	public Clinic findByCnpj(String cnpj) {
+	public Doctor findByCrm(String crm) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT c.* "
-									 	+ "FROM clinica as c "
-									 	+ "WHERE c.Cnpj = ?");
-			st.setString(1, cnpj);
+			st = conn.prepareStatement("SELECT d.* "
+									 	+ "FROM doctor as d "
+									 	+ "WHERE c.Crm = ?");
+			st.setString(1, crm);
 			rs = st.executeQuery();
 			if(rs.next()) {
-				Clinic obj = instantiateClinic(rs);
+				Doctor obj = instantiateDoctor(rs);
 				return obj;
 			}
 			return null;
@@ -100,16 +103,17 @@ public class ClinicDaoJDBC implements ClinicDao {
 		}
 	}
 
-	@Override
-	public List<Clinic> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	private Clinic instantiateClinic(ResultSet rs)throws SQLException {
-		Clinic obj = new Clinic();
-		obj.setCnpj(rs.getString("Cnpj"));
+	private Doctor instantiateDoctor(ResultSet rs) throws SQLException{
+		Doctor obj = new Doctor();
+		obj.setCrm(rs.getString("Crm"));
 		obj.setName(rs.getString("Name"));
 		return obj;
 	}
+
+	@Override
+	public List<Doctor> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
