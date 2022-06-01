@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="407.0" prefWidth="529.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ClinicListController">
+<VBox prefHeight="355.0" prefWidth="553.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DoctorListController">
    <children>
-      <Label text="Clinic Registration">
+      <Label text="Doctor Registration">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -24,11 +24,10 @@
           <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="New" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableViewClinic" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tableViewDoctor" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="tableColumnCnpj" prefWidth="70.0" text="CNPJ" />
-            <TableColumn fx:id="tableColumnName" prefWidth="135.0" text="Name" />
-          <TableColumn fx:id="tableColumnLocal" prefWidth="149.0" text="Local" />
+          <TableColumn fx:id="tableColumnCrm" prefWidth="75.0" text="CRM" />
+          <TableColumn fx:id="tableColumnName" prefWidth="159.0" text="Name" />
         </columns>
       </TableView>
    </children>

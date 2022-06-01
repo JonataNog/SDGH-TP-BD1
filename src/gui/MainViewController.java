@@ -17,6 +17,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.ClinicService;
+import model.services.DoctorService;
+import model.services.PatientService;
 
 public class MainViewController implements Initializable{
 	
@@ -45,12 +47,18 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void onMenuItemDoctorAction() {
-		System.out.println("onMenuItemDoctorAction");
+		loadView("/gui/DoctorList.fxml", (DoctorListController controller) -> {
+			controller.setDoctorService(new DoctorService());
+			controller.updateTableView();
+			});
 	}
 	
 	@FXML
 	public void onMenuItemPatientAction() {
-		System.out.println("onMenuItemPatientAction");
+		loadView("/gui/PatientList.fxml", (PatientListController controller) -> {
+			controller.setPatientService(new PatientService());
+			controller.updateTableView();
+			});
 	}
 	
 	@FXML

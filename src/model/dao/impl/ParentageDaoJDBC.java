@@ -120,6 +120,12 @@ public class ParentageDaoJDBC implements ParentageDao{
 		return obj;
 	}
 
+	@Override
+	public List<Parentage> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	private Parentage instantiateParentage(ResultSet rs, Patient pat) throws SQLException {
 		Parentage obj = new Parentage();
 		obj.setParentageCpf(rs.getString("Cpf_parente"));
@@ -128,12 +134,6 @@ public class ParentageDaoJDBC implements ParentageDao{
 		obj.setPatient(pat);
 		
 		return obj;
-	}
-
-	@Override
-	public List<Parentage> findAll() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

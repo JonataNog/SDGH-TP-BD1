@@ -119,6 +119,12 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 			DB.closeResultSet(rs);
 		}
 	}
+	
+	@Override
+	public List<Consultation> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	private Patient instantiatePatient(ResultSet rs)throws SQLException {
 		Patient obj = new Patient();
@@ -157,12 +163,6 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 		obj.setPatient(patient);
 		
 		return obj;
-	}
-
-	@Override
-	public List<Consultation> findAll() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

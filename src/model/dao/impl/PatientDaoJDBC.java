@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DB;
@@ -107,6 +108,33 @@ public class PatientDaoJDBC implements PatientDao{
 		}
 	}
 
+	@Override
+	public List<Patient> findAll() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+				"SELECT * FROM paciente ORDER BY Name");
+			rs = st.executeQuery();
+
+			List<Patient> list = new ArrayList<>();
+
+			while (rs.next()) {
+				Patient obj = new Patient();
+				obj = instantiatePatient(rs);
+				list.add(obj);
+			}
+			return list;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}	
+	}
+	
 	private Patient instantiatePatient(ResultSet rs) throws SQLException{
 		Patient obj = new Patient();
 		obj.setCpf(rs.getString("Cpf"));
@@ -116,10 +144,5 @@ public class PatientDaoJDBC implements PatientDao{
 		return obj;
 	}
 
-	@Override
-	public List<Patient> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

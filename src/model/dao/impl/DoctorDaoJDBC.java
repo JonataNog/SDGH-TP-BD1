@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DB;
@@ -103,17 +104,38 @@ public class DoctorDaoJDBC implements DoctorDao {
 		}
 	}
 
+	@Override
+	public List<Doctor> findAll() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+				"SELECT * FROM medico ORDER BY Name");
+			rs = st.executeQuery();
+
+			List<Doctor> list = new ArrayList<>();
+
+			while (rs.next()) {
+				Doctor obj = new Doctor();
+				obj = instantiateDoctor(rs);
+				list.add(obj);
+			}
+			return list;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+	}
+	
 	private Doctor instantiateDoctor(ResultSet rs) throws SQLException{
 		Doctor obj = new Doctor();
 		obj.setCrm(rs.getString("Crm"));
 		obj.setName(rs.getString("Name"));
 		return obj;
-	}
-
-	@Override
-	public List<Doctor> findAll() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

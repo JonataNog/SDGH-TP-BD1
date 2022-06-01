@@ -23,29 +23,26 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.entities.Clinic;
-import model.services.ClinicService;
+import model.entities.Doctor;
+import model.services.DoctorService;
 
-public class ClinicListController implements Initializable{
+public class DoctorListController implements Initializable{
 	
-	private ClinicService service;
-	
-	@FXML
-	private TableView<Clinic> tableViewClinic;
+	private DoctorService service;
 	
 	@FXML
-	private TableColumn<Clinic, String> tableColumnCnpj;
+	private TableView<Doctor> tableViewDoctor;
 	
 	@FXML
-	private TableColumn<Clinic, String> tableColumnName;
+	private TableColumn<Doctor, String> tableColumnCrm;
 	
 	@FXML
-	private TableColumn<Clinic, String> tableColumnLocal;
+	private TableColumn<Doctor, String> tableColumnName;
 	
 	@FXML
 	private Button btNew;
 	
-	private ObservableList<Clinic> obsList;
+	private ObservableList<Doctor> obsList;
 	
 	@FXML 
 	public void onBtNewAction(ActionEvent event) {
@@ -53,7 +50,7 @@ public class ClinicListController implements Initializable{
 		createDialogForm("/gui/ClinicForm.fxml", parentStage);
 	}
 	
-	public void setClinicService(ClinicService service) {
+	public void setDoctorService(DoctorService service) {
 		this.service = service;
 	}
 
@@ -63,21 +60,20 @@ public class ClinicListController implements Initializable{
 	}	
 
 	private void initializeNodes() {
-		tableColumnCnpj.setCellValueFactory(new PropertyValueFactory<>("cnpj"));
+		tableColumnCrm.setCellValueFactory(new PropertyValueFactory<>("crm"));
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
-		tableColumnLocal.setCellValueFactory(new PropertyValueFactory<>("local"));
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
-		tableViewClinic.prefHeightProperty().bind(stage.heightProperty());
+		tableViewDoctor.prefHeightProperty().bind(stage.heightProperty());
 	}
 	
 	public void updateTableView() {
 		if(service == null) {
 			throw new IllegalStateException("Service was null");
 		}
-		List<Clinic> list = service.findAll();
+		List<Doctor> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
-		tableViewClinic.setItems(obsList);
+		tableViewDoctor.setItems(obsList);
 	}
 	
 	private void createDialogForm(String absoluteName, Stage parentStage) {
@@ -86,7 +82,7 @@ public class ClinicListController implements Initializable{
 			Pane pane = loader.load();
 			
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Enter Clinic data");
+			dialogStage.setTitle("Enter Doctor data");
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.setResizable(false);
 			dialogStage.initOwner(parentStage);
