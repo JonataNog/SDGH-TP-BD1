@@ -6,13 +6,15 @@ public class Clinic {
 
 	private String cnpj;
 	private String name;
+	private String local;
 	
 	public Clinic() {
 	}
 	
-	public Clinic(String cnpj, String name) {
+	public Clinic(String cnpj, String name, String local) {
 		this.cnpj = cnpj;
 		this.name = name;
+		this.local = local;
 	}
 
 	public String getCnpj() {
@@ -36,6 +38,14 @@ public class Clinic {
 		return Objects.hash(cnpj);
 	}
 
+	public String getLocal() {
+		return local;
+	}
+
+	public void setLocal(String local) {
+		this.local = local;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -50,7 +60,7 @@ public class Clinic {
 
 	@Override
 	public String toString() {
-		return "Clinic [cnpj=" + cnpj + ", name=" + name + "]";
+		return "Clinic [cnpj=" + cnpj + ", name=" + name + ", local=" + local + "]";
 	}
 
 }

@@ -24,11 +24,12 @@ public class ClinicDaoJDBC implements ClinicDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("INSERT INTO clinica "
-										 + "(Cnpj, Nome) "
+										 + "(Cnpj, Nome, Local) "
 										 + "VALUES "
-										 + "(?, ?)");
+										 + "(?, ?, ?)");
 			st.setString(1, obj.getCnpj());
 			st.setString(2, obj.getName());
+			st.setString(3, obj.getLocal());
 			st.executeUpdate();
 		}
 		catch(SQLException e) {
@@ -44,10 +45,11 @@ public class ClinicDaoJDBC implements ClinicDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("UPDATE clinica " 
-										+ "SET Nome = ? "
+										+ "SET Nome = ?, Local = ? "
 										+ "WHERE Cnpj = ?");
 			st.setString(1, obj.getName());
-			st.setString(2, obj.getCnpj());
+			st.setString(2, obj.getLocal());
+			st.setString(3, obj.getCnpj());
 			st.executeUpdate();
 			
 		}
@@ -110,6 +112,7 @@ public class ClinicDaoJDBC implements ClinicDao {
 		Clinic obj = new Clinic();
 		obj.setCnpj(rs.getString("Cnpj"));
 		obj.setName(rs.getString("Name"));
+		obj.setLocal(rs.getString("Local"));
 		return obj;
 	}
 }
