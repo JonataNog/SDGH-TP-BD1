@@ -9,68 +9,77 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import model.entities.Clinic;
+import model.entities.Doctor;
 
-public class ClinicFormController implements Initializable{
+public class DoctorFormController implements Initializable{
 	
-	private Clinic entity;
-
+	private Doctor entity;
+	
 	@FXML
-	private TextField txtCnpj;
+	private TextField txtCrm;
 	
 	@FXML
 	private TextField txtName;
 	
 	@FXML
-	private TextField txtLocal;
+	private TextField txtSpecialization;
 	
 	@FXML
-	private Label labelErrorCnpj;
+	private TextField txtClinic;
+	
+	@FXML
+	private Button btSave;
+	
+	@FXML 
+	private Button btCancel;
+	
+	@FXML
+	private Label labelErrorCrm;
 	
 	@FXML
 	private Label labelErrorName;
 	
 	@FXML
-	private Label labelErrorLocal;
+	private Label labelErrorSpecialization;
 	
 	@FXML
-	private Button btSave;
-	
-	@FXML
-	private Button btCancel;
+	private Label labelErrorClinic;
 	
 	@FXML
 	public void onBtSaveAction() {
 		System.out.println("onBtSaveAction");
 	}
 	
-	@FXML
+	@FXML 
 	public void onBtCancelAction() {
 		System.out.println("onBtCancelAction");
 	}
 	
-	public void setClinic(Clinic entity) {
+	public void setDoctor(Doctor entity) {
 		this.entity = entity;
 	}
-	
+
 	@Override
-	public void initialize(URL url, ResourceBundle rb) {
+	public void initialize(URL arg0, ResourceBundle arg1) {
 		initializeNodes();
+		
 	}
 	
 	private void initializeNodes() {
-		Constraints.setTextFieldMaxLength(txtCnpj, 18);
+		Constraints.setTextFieldMaxLength(txtCrm, 9);
 		Constraints.setTextFieldMaxLength(txtName, 40);
-		Constraints.setTextFieldMaxLength(txtLocal, 30);
+		Constraints.setTextFieldMaxLength(txtSpecialization, 30);
+		Constraints.setTextFieldMaxLength(txtClinic, 30);
 	}
 	
 	public void updateFormData() {
 		if (entity == null) {
 			throw new IllegalStateException("Entity was null");
 		}
-		txtCnpj.setText(entity.getCnpj());
+		txtCrm.setText(entity.getCrm());
 		txtName.setText(entity.getName());
-		txtLocal.setText(entity.getLocal());
+		txtSpecialization.setText(entity.getSpecialization());
+		txtClinic.setText(String.valueOf(entity.getClinic()));
 	}
 
 }

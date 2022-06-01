@@ -53,7 +53,8 @@ public class DoctorListController implements Initializable{
 	@FXML 
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		createDialogForm("/gui/DoctorForm.fxml", parentStage);
+		Doctor obj = new Doctor();
+		createDialogForm(obj, "/gui/DoctorForm.fxml", parentStage);
 	}
 	
 	public void setDoctorService(DoctorService service) {
@@ -84,10 +85,14 @@ public class DoctorListController implements Initializable{
 		tableViewDoctor.setItems(obsList);
 	}
 	
-	private void createDialogForm(String absoluteName, Stage parentStage) {
+	private void createDialogForm(Doctor obj, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
+			
+			DoctorFormController controller = loader.getController();
+			controller.setDoctor(obj);
+			controller.updateFormData();
 			
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Enter Doctor data");
