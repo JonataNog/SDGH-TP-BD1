@@ -6,13 +6,18 @@ public class Doctor {
 	
 	private String crm;
 	private String name;
+	private String specialization;
+	
+	private Clinic clinic;
 	
 	public Doctor() {
 	}
 	
-	public Doctor(String crm, String name) {
+	public Doctor(String crm, String name, String specialization, Clinic clinic) {
 		this.crm = crm;
 		this.name = name;
+		this.specialization = specialization;
+		this.clinic = clinic;
 	}
 
 	public String getCrm() {
@@ -29,6 +34,22 @@ public class Doctor {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getSpecialization() {
+		return specialization;
+	}
+
+	public void setSpecialization(String specialization) {
+		this.specialization = specialization;
+	}
+
+	public Clinic getClinic() {
+		return clinic;
+	}
+
+	public void setClinic(Clinic clinic) {
+		this.clinic = clinic;
 	}
 
 	@Override
@@ -50,7 +71,7 @@ public class Doctor {
 
 	@Override
 	public String toString() {
-		return "Doctor [crm=" + crm + ", name=" + name + "]";
+		return "Doctor [crm=" + crm + ", name=" + name + ", specialization=" + specialization + ", clinic=" + clinic
+				+ "]";
 	}
-
 }

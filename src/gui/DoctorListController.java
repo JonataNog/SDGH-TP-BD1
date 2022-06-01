@@ -40,6 +40,12 @@ public class DoctorListController implements Initializable{
 	private TableColumn<Doctor, String> tableColumnName;
 	
 	@FXML
+	private TableColumn<Doctor, String> tableColumnSpecialization;
+	
+	@FXML
+	private TableColumn<Doctor, String> tableColumnClinic;
+	
+	@FXML
 	private Button btNew;
 	
 	private ObservableList<Doctor> obsList;
@@ -62,6 +68,8 @@ public class DoctorListController implements Initializable{
 	private void initializeNodes() {
 		tableColumnCrm.setCellValueFactory(new PropertyValueFactory<>("crm"));
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+		tableColumnSpecialization.setCellValueFactory(new PropertyValueFactory<>("specialization"));
+		tableColumnClinic.setCellValueFactory(new PropertyValueFactory<>("clinic"));
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewDoctor.prefHeightProperty().bind(stage.heightProperty());

@@ -28,6 +28,8 @@
         <columns>
           <TableColumn fx:id="tableColumnCrm" prefWidth="75.0" text="CRM" />
           <TableColumn fx:id="tableColumnName" prefWidth="159.0" text="Name" />
+            <TableColumn fx:id="tableColumnSpecialization" prefWidth="138.0" text="Specialization" />
+            <TableColumn fx:id="tableColumnClinic" prefWidth="135.0" text="Clinic" />
         </columns>
       </TableView>
    </children>
