@@ -66,8 +66,8 @@ public class PatientFormController implements Initializable{
 	
 	private void initializeNodes() {
 		Constraints.setTextFieldMaxLength(txtCpf, 14);
-		Constraints.setTextFieldMaxLength(txtName, 40);
-		Constraints.setTextFieldMaxLength(txtConvenio, 30);
+		Constraints.setTextFieldMaxLength(txtName, 15);
+		Constraints.setTextFieldMaxLength(txtConvenio, 15);
 		Constraints.setTextFieldMaxLength(txtSex, 1);
 	}
 	

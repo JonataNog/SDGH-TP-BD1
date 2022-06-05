@@ -10,20 +10,18 @@ public class Consultation {
 	private String laudo;
 	private Date date;
 	
-	private Doctor doctor;
 	private Clinic clinic;
 	private Patient patient;
 	
 	public Consultation() {
 	}
 	
-	public Consultation(Integer protocol, String medication, String laudo, Date date, Doctor doctor, Clinic clinic,
+	public Consultation(Integer protocol, String medication, String laudo, Date date, Clinic clinic,
 			Patient patient) {
 		this.protocol = protocol;
 		this.medication = medication;
 		this.laudo = laudo;
 		this.date = date;
-		this.doctor = doctor;
 		this.clinic = clinic;
 		this.patient = patient;
 	}
@@ -58,14 +56,6 @@ public class Consultation {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public Doctor getDoctor() {
-		return doctor;
-	}
-
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
 	}
 
 	public Clinic getClinic() {
@@ -104,7 +94,7 @@ public class Consultation {
 	@Override
 	public String toString() {
 		return "Consultation [protocol=" + protocol + ", medication=" + medication + ", laudo=" + laudo + ", date="
-				+ date + ", doctor=" + doctor + ", clinic=" + clinic + ", patient=" + patient + "]";
+				+ date + ", clinic=" + clinic + ", patient=" + patient + "]";
 	}
 
 }

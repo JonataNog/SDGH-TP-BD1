@@ -26,9 +26,9 @@
       </ToolBar>
       <TableView fx:id="tableViewClinic" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="tableColumnCnpj" prefWidth="70.0" text="CNPJ" />
-            <TableColumn fx:id="tableColumnName" prefWidth="135.0" text="Name" />
-          <TableColumn fx:id="tableColumnLocal" prefWidth="149.0" text="Local" />
+          <TableColumn fx:id="tableColumnCnpj" prefWidth="126.0" text="CNPJ" />
+            <TableColumn fx:id="tableColumnName" prefWidth="150.0" text="Name" />
+          <TableColumn fx:id="tableColumnLocal" prefWidth="252.0" text="Local" />
         </columns>
       </TableView>
    </children>

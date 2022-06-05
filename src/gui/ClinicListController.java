@@ -88,6 +88,7 @@ public class ClinicListController implements Initializable{
 			
 			ClinicFormController controller = loader.getController();
 			controller.setClinic(obj);
+			controller.setClinicService(new ClinicService());
 			controller.updateFormData();
 			
 			Stage dialogStage = new Stage();

@@ -28,7 +28,7 @@ public class DoctorDaoJDBC implements DoctorDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("INSERT INTO medico "
-										 + "(Crm, Nome, Especializacao, Cnpj) "
+										 + "(crm, nome, especializacao, cnpj) "
 										 + "VALUES "
 										 + "(?, ?, ?, ?)");
 			st.setString(1, obj.getCrm());
@@ -51,8 +51,8 @@ public class DoctorDaoJDBC implements DoctorDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("UPDATE medico " 
-										+ "SET Nome = ?, Especializacao = ?, Clinic = ? "
-										+ "WHERE Crm = ?");
+										+ "SET nome = ?, especializacao = ?, cnpj = ? "
+										+ "WHERE crm = ?");
 			st.setString(1, obj.getName());
 			st.setString(2, obj.getSpecialization());
 			st.setString(3, obj.getClinic().getCnpj());
@@ -73,7 +73,7 @@ public class DoctorDaoJDBC implements DoctorDao {
 	public void deleteByCrm(Doctor obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("DELETE FROM medico WHERE Crm = ?");
+			st = conn.prepareStatement("DELETE FROM medico WHERE crm = ?");
 			st.setString(1, obj.getCrm());
 			st.executeUpdate();
 		}
@@ -91,9 +91,9 @@ public class DoctorDaoJDBC implements DoctorDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT m.Crm, m.Nome, m.Especializacao, c.Nome "
+			st = conn.prepareStatement("SELECT m.crm, m.nome, m.especializacao, c.nome "
 									 	+ "FROM medico as m, clinica as c "
-									 	+ "WHERE m.Crm = ?");
+									 	+ "WHERE m.crm = ?");
 			st.setString(1, crm);
 			rs = st.executeQuery();
 			if(rs.next()) {
@@ -118,21 +118,21 @@ public class DoctorDaoJDBC implements DoctorDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-				"SELECT d.Crm, d.Nome, d.Especializacao, c.Nome "
-					+ "FROM medico INNER JOIN clinica "
-					+ "ON d.Cnpj = c.Cnpj "
-					+ "ORDER BY Name");
+				"SELECT m.crm, m.nome, m.especializacao, c.nome "
+					+ "FROM medico as m INNER JOIN clinica as c "
+					+ "ON m.cnpj = c.cnpj "
+					+ "ORDER BY nome");
 			rs = st.executeQuery();
 
 			List<Doctor> list = new ArrayList<>();
 			Map<String, Clinic> map = new HashMap<>();
 
 			while (rs.next()) {
-				Clinic clinic = map.get(rs.getString("Cnpj"));
+				Clinic clinic = map.get(rs.getString("cnpj"));
 				
 				if(clinic == null) {
 					clinic = instantiateClinic(rs);
-					map.put(rs.getString("Cnpj"), clinic);
+					map.put(rs.getString("cnpj"), clinic);
 				}
 				
 				Doctor obj = instantiateDoctor(rs, clinic);
@@ -151,18 +151,18 @@ public class DoctorDaoJDBC implements DoctorDao {
 	
 	private Doctor instantiateDoctor(ResultSet rs, Clinic clinic) throws SQLException{
 		Doctor obj = new Doctor();
-		obj.setCrm(rs.getString("Crm"));
-		obj.setName(rs.getString("Nome"));
-		obj.setName(rs.getString("Especializacao"));
+		obj.setCrm(rs.getString("crm"));
+		obj.setName(rs.getString("nome"));
+		obj.setName(rs.getString("especializacao"));
 		obj.setClinic(clinic);
 		return obj;
 	}
 	
 	private Clinic instantiateClinic(ResultSet rs)throws SQLException {
 		Clinic obj = new Clinic();
-		obj.setCnpj(rs.getString("Cnpj"));
-		obj.setName(rs.getString("Name"));
-		obj.setLocal(rs.getString("Local"));
+		obj.setCnpj(rs.getString("cnpj"));
+		obj.setName(rs.getString("nome"));
+		obj.setLocal(rs.getString("local"));
 		return obj;
 	}
 

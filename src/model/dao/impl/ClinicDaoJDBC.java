@@ -25,7 +25,7 @@ public class ClinicDaoJDBC implements ClinicDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("INSERT INTO clinica "
-										 + "(Cnpj, Nome, Local) "
+										 + "(cnpj, nome, local) "
 										 + "VALUES "
 										 + "(?, ?, ?)");
 			st.setString(1, obj.getCnpj());
@@ -46,8 +46,8 @@ public class ClinicDaoJDBC implements ClinicDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("UPDATE clinica " 
-										+ "SET Nome = ?, Local = ? "
-										+ "WHERE Cnpj = ?");
+										+ "SET nome = ?, local = ? "
+										+ "WHERE cnpj = ?");
 			st.setString(1, obj.getName());
 			st.setString(2, obj.getLocal());
 			st.setString(3, obj.getCnpj());
@@ -66,7 +66,7 @@ public class ClinicDaoJDBC implements ClinicDao {
 	public void deleteByCnpj(Clinic obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("DELETE FROM clinica WHERE Cnpj = ?");
+			st = conn.prepareStatement("DELETE FROM clinica WHERE cnpj = ?");
 			st.setString(1, obj.getCnpj());
 			st.executeUpdate();
 		}
@@ -85,7 +85,7 @@ public class ClinicDaoJDBC implements ClinicDao {
 		try {
 			st = conn.prepareStatement("SELECT c.* "
 									 	+ "FROM clinica as c "
-									 	+ "WHERE c.Cnpj = ?");
+									 	+ "WHERE c.cnpj = ?");
 			st.setString(1, cnpj);
 			rs = st.executeQuery();
 			if(rs.next()) {
@@ -109,7 +109,7 @@ public class ClinicDaoJDBC implements ClinicDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-				"SELECT * FROM clinica ORDER BY Name");
+				"SELECT * FROM clinica ORDER BY nome");
 			rs = st.executeQuery();
 
 			List<Clinic> list = new ArrayList<>();
@@ -132,9 +132,9 @@ public class ClinicDaoJDBC implements ClinicDao {
 	
 	private Clinic instantiateClinic(ResultSet rs)throws SQLException {
 		Clinic obj = new Clinic();
-		obj.setCnpj(rs.getString("Cnpj"));
-		obj.setName(rs.getString("Name"));
-		obj.setLocal(rs.getString("Local"));
+		obj.setCnpj(rs.getString("cnpj"));
+		obj.setName(rs.getString("nome"));
+		obj.setLocal(rs.getString("local"));
 		return obj;
 	}
 }
