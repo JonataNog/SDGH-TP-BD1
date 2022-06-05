@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="356.0" prefWidth="539.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PatientListController">
+<VBox prefHeight="469.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PatientListController">
    <children>
       <Label text="Patient Registration">
          <font>
@@ -24,12 +24,15 @@
           <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="New" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableViewPatient" prefHeight="204.0" prefWidth="539.0">
+      <TableView fx:id="tableViewPatient" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="tableColumnCpf" prefWidth="75.0" text="CPF" />
-          <TableColumn fx:id="tableColumnName" prefWidth="129.0" text="Name" />
-            <TableColumn fx:id="tableColumnConvenio" prefWidth="115.0" text="Convenio" />
-            <TableColumn fx:id="tableColumnSex" minWidth="0.0" prefWidth="53.0" text="Sexo" />
+          <TableColumn fx:id="tableColumnCpf" prefWidth="102.0" text="CPF" />
+            <TableColumn fx:id="tableColumnName" prefWidth="114.0" text="Name" />
+          <TableColumn fx:id="tableColumnConvenio" prefWidth="117.0" text="Convênio" />
+            <TableColumn fx:id="tableColumnSex" prefWidth="56.0" text="Sex" />
+            <TableColumn fx:id="tableColumnBirthDate" prefWidth="95.0" text="Birth Date" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="90.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="252.0" />
         </columns>
       </TableView>
    </children>

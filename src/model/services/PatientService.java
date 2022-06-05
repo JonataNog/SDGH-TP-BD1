@@ -1,17 +1,39 @@
 package model.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import model.dao.PatientDao;
+import model.dao.DaoFactory;
 import model.entities.Patient;
 
 public class PatientService {
 	
+	private PatientDao dao = DaoFactory.createPatientDao();
+	
 	public List<Patient> findAll(){
-		List<Patient> list = new ArrayList<>();
-		list.add(new Patient("123456789", "Joao Monteiro", "Golden Cross", "M"));
-		list.add(new Patient("987654321", "Maria de Lourdes", "Unimed", "F"));
-		return list;
+		return dao.findAll();
 	}
-
+	
+	public void saveOrUpdate(Patient obj) {
+		if(cpfInList(obj)) {
+			dao.update(obj);
+		}
+		else {
+			dao.insert(obj);
+		}
+	}
+	
+	private boolean cpfInList(Patient clinic) {
+		List<Patient> list = dao.findAll();
+		for(Patient obj : list) {
+			if(clinic.getCpf() == obj.getCpf()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void remove(Patient obj) {
+		dao.deleteByCpf(obj);
+	}
 }

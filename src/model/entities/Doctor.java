@@ -71,7 +71,8 @@ public class Doctor {
 
 	@Override
 	public String toString() {
-		return "Doctor [crm=" + crm + ", name=" + name + ", specialization=" + specialization + ", clinic=" + clinic
+		return "Doctor [crm=" + crm + ", name=" + name + ", specialization=" + specialization + ", clinic=" + clinic.getName()
 				+ "]";
 	}
+
 }

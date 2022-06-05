@@ -1,5 +1,6 @@
 package model.entities;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Patient {
@@ -8,15 +9,17 @@ public class Patient {
 	private String name;
 	private String convenio;
 	private String sex;
+	private Date birthDate;
 	
 	public Patient() {
 	}
 	
-	public Patient(String cpf, String name, String convenio, String sex) {
+	public Patient(String cpf, String name, String convenio, String sex, Date birthDate) {
 		this.cpf = cpf;
 		this.name = name;
 		this.convenio = convenio;
 		this.sex = sex;
+		this.birthDate = birthDate;
 	}
 
 	public String getCpf() {
@@ -51,6 +54,14 @@ public class Patient {
 		this.sex = sex;
 	}
 
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(cpf);
@@ -70,7 +81,8 @@ public class Patient {
 
 	@Override
 	public String toString() {
-		return "Patient [cpf=" + cpf + ", name=" + name + ", convenio=" + convenio + ", sex=" + sex + "]";
+		return "Patient [cpf=" + cpf + ", name=" + name + ", convenio=" + convenio + ", sex=" + sex + ", birthDate="
+				+ birthDate + "]";
 	}
 
 }

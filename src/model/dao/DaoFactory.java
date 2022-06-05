@@ -2,6 +2,10 @@ package model.dao;
 
 import db.DB;
 import model.dao.impl.ClinicDaoJDBC;
+import model.dao.impl.ConsultationDaoJDBC;
+import model.dao.impl.DoctorDaoJDBC;
+import model.dao.impl.ParentageDaoJDBC;
+import model.dao.impl.PatientDaoJDBC;
 
 public class DaoFactory {
 
@@ -10,19 +14,19 @@ public class DaoFactory {
 	}
 	
 	public static ConsultationDao createConsultationDao() {
-		return null;
+		return new ConsultationDaoJDBC(DB.getConnection());
 	}
 	
 	public static DoctorDao createDoctorDao() {
-		return null;
+		return new DoctorDaoJDBC(DB.getConnection());
 	}
 	
 	public static PatientDao createPatientDao() {
-		return null;
+		return new PatientDaoJDBC(DB.getConnection());
 	}
 	
 	public static ParentageDao createParentageDao() {
-		return null;
+		return new ParentageDaoJDBC(DB.getConnection());
 	}
 	
 	public static HistoricParentageDao createHistoricParentageDao() {

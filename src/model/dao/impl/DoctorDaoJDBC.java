@@ -28,7 +28,7 @@ public class DoctorDaoJDBC implements DoctorDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("INSERT INTO medico "
-										 + "(crm, nome, especializacao, cnpj) "
+										 + "(crm, nome, especializacao, cnpj_clinica) "
 										 + "VALUES "
 										 + "(?, ?, ?, ?)");
 			st.setString(1, obj.getCrm());
@@ -51,7 +51,7 @@ public class DoctorDaoJDBC implements DoctorDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("UPDATE medico " 
-										+ "SET nome = ?, especializacao = ?, cnpj = ? "
+										+ "SET nome = ?, especializacao = ?, cnpj_clinica = ? "
 										+ "WHERE crm = ?");
 			st.setString(1, obj.getName());
 			st.setString(2, obj.getSpecialization());
@@ -118,21 +118,21 @@ public class DoctorDaoJDBC implements DoctorDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-				"SELECT m.crm, m.nome, m.especializacao, c.nome "
-					+ "FROM medico as m INNER JOIN clinica as c "
-					+ "ON m.cnpj = c.cnpj "
-					+ "ORDER BY nome");
+				"SELECT medico.crm, medico.nome, medico.especializacao, clinica.cnpj as 'Nome da Clinica' "
+					+ "FROM medico INNER JOIN clinica "
+					+ "ON medico.cnpj = clinica.cnpj "
+					+ "ORDER BY medico.nome");
 			rs = st.executeQuery();
 
 			List<Doctor> list = new ArrayList<>();
 			Map<String, Clinic> map = new HashMap<>();
 
 			while (rs.next()) {
-				Clinic clinic = map.get(rs.getString("cnpj"));
+				Clinic clinic = map.get(rs.getString("Nome da Clinica"));
 				
 				if(clinic == null) {
 					clinic = instantiateClinic(rs);
-					map.put(rs.getString("cnpj"), clinic);
+					map.put(rs.getString("Nome da Clinica"), clinic);
 				}
 				
 				Doctor obj = instantiateDoctor(rs, clinic);

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="355.0" prefWidth="553.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DoctorListController">
+<VBox prefHeight="469.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DoctorListController">
    <children>
       <Label text="Doctor Registration">
          <font>
@@ -26,10 +26,12 @@
       </ToolBar>
       <TableView fx:id="tableViewDoctor" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="tableColumnCrm" prefWidth="75.0" text="CRM" />
-          <TableColumn fx:id="tableColumnName" prefWidth="159.0" text="Name" />
-            <TableColumn fx:id="tableColumnSpecialization" prefWidth="138.0" text="Specialization" />
-            <TableColumn fx:id="tableColumnClinic" prefWidth="135.0" text="Clinic" />
+          <TableColumn fx:id="tableColumnCrm" prefWidth="98.0" text="CRM" />
+            <TableColumn fx:id="tableColumnName" prefWidth="166.0" text="Name" />
+          <TableColumn fx:id="tableColumnSpecialization" prefWidth="101.0" text="Specialization" />
+            <TableColumn fx:id="tableColumnCnpj" prefWidth="136.0" text="Clínica" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="57.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="52.0" />
         </columns>
       </TableView>
    </children>
