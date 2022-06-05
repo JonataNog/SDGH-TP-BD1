@@ -144,7 +144,7 @@ public class PatientDaoJDBC implements PatientDao{
 		obj.setName(rs.getString("nome"));
 		obj.setConvenio(rs.getString("convenio"));
 		obj.setSex(rs.getString("sexo"));
-		obj.setBirthDate(rs.getDate("data_nasc"));
+		obj.setBirthDate(new java.util.Date(rs.getTimestamp("data_nasc").getTime()));
 		return obj;
 	}
 
