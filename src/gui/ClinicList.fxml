@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="407.0" prefWidth="529.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ClinicListController">
+<VBox prefHeight="469.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ClinicListController">
    <children>
       <Label text="Clinic Registration">
          <font>
@@ -28,7 +28,8 @@
         <columns>
           <TableColumn fx:id="tableColumnCnpj" prefWidth="126.0" text="CNPJ" />
             <TableColumn fx:id="tableColumnName" prefWidth="150.0" text="Name" />
-          <TableColumn fx:id="tableColumnLocal" prefWidth="252.0" text="Local" />
+          <TableColumn fx:id="tableColumnLocal" prefWidth="280.0" text="Local" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="45.0" />
         </columns>
       </TableView>
    </children>
