@@ -33,17 +33,17 @@ public class Clinic {
 		this.name = name;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(cnpj);
-	}
-
 	public String getLocal() {
 		return local;
 	}
 
 	public void setLocal(String local) {
 		this.local = local;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(cnpj);
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
+import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.collections.FXCollections;
@@ -26,7 +27,7 @@ import javafx.stage.Stage;
 import model.entities.Clinic;
 import model.services.ClinicService;
 
-public class ClinicListController implements Initializable{
+public class ClinicListController implements Initializable, DataChangeListener{
 	
 	private ClinicService service;
 	
@@ -89,6 +90,7 @@ public class ClinicListController implements Initializable{
 			ClinicFormController controller = loader.getController();
 			controller.setClinic(obj);
 			controller.setClinicService(new ClinicService());
+			controller.subscribeDataChangeListener(this);
 			controller.updateFormData();
 			
 			Stage dialogStage = new Stage();
@@ -102,6 +104,11 @@ public class ClinicListController implements Initializable{
 		catch(IOException e) {
 			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
+	}
+
+	@Override
+	public void onDataChanged() {
+		updateTableView();
 	}
 
 }

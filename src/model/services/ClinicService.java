@@ -1,6 +1,5 @@
 package model.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import model.dao.ClinicDao;
@@ -25,7 +24,7 @@ public class ClinicService {
 	}
 	
 	private boolean cnpjInList(Clinic clinic) {
-		List<Clinic> list = new ArrayList<>();
+		List<Clinic> list = dao.findAll();
 		for(Clinic obj : list) {
 			if(clinic.getCnpj() == obj.getCnpj()) {
 				return true;
