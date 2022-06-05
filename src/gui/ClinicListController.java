@@ -3,6 +3,7 @@ package gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.Main;
@@ -19,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -47,6 +49,9 @@ public class ClinicListController implements Initializable, DataChangeListener {
 
 	@FXML
 	private TableColumn<Clinic, Clinic> tableColumnEDIT;
+
+	@FXML
+	private TableColumn<Clinic, Clinic> tableColumnREMOVE;
 
 	@FXML
 	private Button btNew;
@@ -86,6 +91,7 @@ public class ClinicListController implements Initializable, DataChangeListener {
 		obsList = FXCollections.observableArrayList(list);
 		tableViewClinic.setItems(obsList);
 		initEditButtons();
+		initRemoveButtons();
 	}
 
 	private void createDialogForm(Clinic obj, String absoluteName, Stage parentStage) {
@@ -129,10 +135,44 @@ public class ClinicListController implements Initializable, DataChangeListener {
 					return;
 				}
 				setGraphic(button);
-				button.setOnAction(
-						event -> createDialogForm(obj, "/gui/ClinicForm.fxml", Utils.currentStage(event)));
+				button.setOnAction(event -> createDialogForm(obj, "/gui/ClinicForm.fxml", Utils.currentStage(event)));
 			}
 		});
+	}
+
+	private void initRemoveButtons() {
+		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnREMOVE.setCellFactory(param -> new TableCell<Clinic, Clinic>() {
+			private final Button button = new Button("remove");
+
+			@Override
+			protected void updateItem(Clinic obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(event -> removeEntity(obj));
+			}
+		});
+	}
+
+	private void removeEntity(Clinic obj) {
+		Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
+		
+		if(result.get() == ButtonType.OK) {
+			if(service == null) {
+				throw new IllegalStateException("Service was null");
+			}
+			try {
+				service.remove(obj);
+				updateTableView();
+			}
+			catch(Exception e) {
+				Alerts.showAlert("Error removing object", null, e.getMessage(), AlertType.ERROR);
+			}
+		}
 	}
 
 }

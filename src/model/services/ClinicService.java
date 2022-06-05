@@ -32,4 +32,8 @@ public class ClinicService {
 		}
 		return false;
 	}
+	
+	public void remove(Clinic obj) {
+		dao.deleteByCnpj(obj);
+	}
 }
