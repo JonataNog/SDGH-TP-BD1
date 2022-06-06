@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="693.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
    <content>
-      <VBox prefHeight="307.0" prefWidth="517.0">
+      <VBox prefHeight="352.0" prefWidth="689.0">
          <children>
             <MenuBar>
               <menus>
-                <Menu mnemonicParsing="false" text="Registration">
+                <Menu mnemonicParsing="false" text="Menu">
                   <items>
+                        <MenuItem fx:id="menuItemConsultations" mnemonicParsing="false" onAction="#onMenuItemConsultationsAction" text="Consultations" />
                     <MenuItem fx:id="menuItemClinic" mnemonicParsing="false" onAction="#onMenuItemClinicAction" text="Clinic" />
                         <MenuItem fx:id="menuItemDoctor" mnemonicParsing="false" onAction="#onMenuItemDoctorAction" text="Doctor" />
                         <MenuItem fx:id="menuItemPatient" mnemonicParsing="false" onAction="#onMenuItemPatientAction" text="Patient" />
@@ -27,6 +33,20 @@
                 </Menu>
               </menus>
             </MenuBar>
+            <AnchorPane prefHeight="309.0" prefWidth="615.0">
+               <children>
+                  <ImageView fitHeight="222.0" fitWidth="341.0" layoutX="174.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../css/logo.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="161.0" layoutY="41.0" text="Sistema GH">
+                     <font>
+                        <Font name="System Bold" size="68.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
          </children>
       </VBox>
    </content>

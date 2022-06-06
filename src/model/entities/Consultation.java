@@ -10,22 +10,26 @@ public class Consultation {
 	private String laudo;
 	private Date date;
 	
+	private Doctor doctor;
 	private Clinic clinic;
 	private Patient patient;
 	
 	public Consultation() {
 	}
 	
-	public Consultation(Integer protocol, String medication, String laudo, Date date, Clinic clinic,
+	public Consultation(Integer protocol, String medication, String laudo, Date date, Doctor doctor, Clinic clinic,
 			Patient patient) {
 		this.protocol = protocol;
 		this.medication = medication;
 		this.laudo = laudo;
 		this.date = date;
+		this.doctor = doctor;
 		this.clinic = clinic;
 		this.patient = patient;
 	}
-	
+
+
+
 	public Integer getProtocol() {
 		return protocol;
 	}
@@ -74,6 +78,14 @@ public class Consultation {
 		this.patient = patient;
 	}
 
+	public Doctor getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(protocol);
@@ -94,7 +106,7 @@ public class Consultation {
 	@Override
 	public String toString() {
 		return "Consultation [protocol=" + protocol + ", medication=" + medication + ", laudo=" + laudo + ", date="
-				+ date + ", clinic=" + clinic + ", patient=" + patient + "]";
+				+ date + ", doctor=" + doctor + ", clinic=" + clinic + ", patient=" + patient + "]";
 	}
 
 }

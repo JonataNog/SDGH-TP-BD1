@@ -24,6 +24,9 @@ import model.services.PatientService;
 public class MainViewController implements Initializable{
 	
 	@FXML
+	private MenuItem menuItemConsultations;
+	
+	@FXML
 	private MenuItem menuItemClinic;
 	
 	@FXML
@@ -37,6 +40,11 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	private MenuItem menuItemAbout;
+	
+	@FXML
+	public void onMenuItemConsultationsAction() {
+		loadView("/gui/MainView.fxml", x-> {});
+	}
 	
 	@FXML
 	public void onMenuItemClinicAction() {

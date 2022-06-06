@@ -1,24 +1,23 @@
 package model.entities;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class HistoricPatient {
 	
-	private String[] historic;
+	private String historic;
 	
 	private Patient patient;
 
-	public HistoricPatient(String[] historic, Patient patient) {
+	public HistoricPatient(String historic, Patient patient) {
 		this.historic = historic;
 		this.patient = patient;
 	}
 
-	public String[] getHistoric() {
+	public String getHistoric() {
 		return historic;
 	}
 
-	public void setHistoric(String[] historic) {
+	public void setHistoric(String historic) {
 		this.historic = historic;
 	}
 
@@ -32,11 +31,7 @@ public class HistoricPatient {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(historic);
-		result = prime * result + Objects.hash(patient);
-		return result;
+		return Objects.hash(historic, patient);
 	}
 
 	@Override
@@ -48,12 +43,12 @@ public class HistoricPatient {
 		if (getClass() != obj.getClass())
 			return false;
 		HistoricPatient other = (HistoricPatient) obj;
-		return Arrays.equals(historic, other.historic) && Objects.equals(patient, other.patient);
+		return Objects.equals(historic, other.historic) && Objects.equals(patient, other.patient);
 	}
 
 	@Override
 	public String toString() {
-		return "HistoricPatient [historic=" + Arrays.toString(historic) + "]";
+		return "HistoricPatient [historic=" + historic + ", patient=" + patient + "]";
 	}
-	
+
 }

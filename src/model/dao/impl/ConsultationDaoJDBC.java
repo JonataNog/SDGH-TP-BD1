@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import db.DB;
@@ -12,6 +13,7 @@ import db.DbException;
 import model.dao.ConsultationDao;
 import model.entities.Clinic;
 import model.entities.Consultation;
+import model.entities.Doctor;
 import model.entities.Patient;
 
 public class ConsultationDaoJDBC implements ConsultationDao {
@@ -27,16 +29,30 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("INSERT INTO consulta "
-										 + "(Protocolo, Data, Laudo, Medicacao, Cnpj, Cpf) "
+										 + "(data, laudo, medicacao, crm, cpf, cnpj) "
 										 + "VALUES "
-										 + "(?, ?, ?, ?, ?, ?, ?)");
-			st.setInt(1, obj.getProtocol());
-			st.setDate(2, new Date(obj.getDate().getTime()));
-			st.setString(3, obj.getLaudo());
-			st.setString(4, obj.getMedication());
-			st.setString(5, obj.getClinic().getCnpj());
-			st.setString(6, obj.getPatient().getCpf());
-			st.executeUpdate();
+										 + "(?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			
+			st.setDate(1, new Date(obj.getDate().getTime()));
+			st.setString(2, obj.getLaudo());
+			st.setString(3, obj.getMedication());
+			st.setString(4, obj.getDoctor().getCrm());
+			st.setString(5, obj.getPatient().getCpf());
+			st.setString(6, obj.getClinic().getCnpj());
+			
+			int rowsAffected = st.executeUpdate();
+			
+			if(rowsAffected > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				if(rs.next()) {
+					int protocol = rs.getInt(1);
+					obj.setProtocol(protocol);
+				}
+				DB.closeResultSet(rs);
+			}
+			else {
+				throw new DbException("Unexpected error! No rows affected!");
+			}
 		}
 		catch(SQLException e) {
 			throw new DbException(e.getMessage());
@@ -52,14 +68,15 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("UPDATE consulta " 
-										+ "SET Data = ?, Laudo = ?, Medicacao = ?, Cnpj = ?, Cpf = ? "
+										+ "SET data = ?, laudo = ?, medicacao = ?, crm = ?, Cpf = ?, Cnpj = ? "
 										+ "WHERE Protocolo = ?");
 			st.setDate(1, new Date(obj.getDate().getTime()));
 			st.setString(2, obj.getLaudo());
 			st.setString(3, obj.getMedication());
-			st.setString(4, obj.getClinic().getCnpj());
+			st.setString(4, obj.getDoctor().getCrm());
 			st.setString(5, obj.getPatient().getCpf());
-			st.setInt(6, obj.getProtocol());
+			st.setString(6, obj.getClinic().getCnpj());
+			st.setInt(7, obj.getProtocol());
 			st.executeUpdate();
 			
 		}
@@ -76,7 +93,7 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 	public void deleteByProtocol(Consultation obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("DELETE FROM consulta WHERE Protocol = ?");
+			st = conn.prepareStatement("DELETE FROM consulta WHERE protocolo = ?");
 			st.setInt(1, obj.getProtocol());
 			st.executeUpdate();
 		}
@@ -94,15 +111,17 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT c.Protocolo, c.Data, c.Laudo, c.Medicacao, cl.Nome, p.Pnome "
-									 	+ "FROM consulta as c, clinica as cl, paciente as p "
-									 	+ "WHERE c.Protocol = ? and c.Crm = m.Crm and c.Cnpj = cl.Cnpj and c.Cpf = p.Cpf");
+			st = conn.prepareStatement("SELECT c.protocolo, c.data, c.laudo, c.medicacao, m.nome as NomeMedico, "
+					+ "cl.nome as NomeClinica, p.nome  as NomePaciente "
+									 	+ "FROM consulta as c, medico as m, clinica as cl, paciente as p "
+									 	+ "WHERE c.protocolo = ? and c.crm = m.crm and c.cnpj = cl.cnpj and c.cpf = p.cpf");
 			st.setInt(1, protocol);
 			rs = st.executeQuery();
 			if(rs.next()) {
+				Doctor doctor = instantiateDoctor(rs);
 				Clinic clinic = instantiateClinic(rs);
 				Patient patient = instantiatePatient(rs);
-				Consultation obj = instantiateConsultation(rs, clinic, patient);
+				Consultation obj = instantiateConsultation(rs, doctor, clinic, patient);
 				return obj;
 			}
 			return null;
@@ -121,13 +140,19 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	private Doctor instantiateDoctor(ResultSet rs) throws SQLException{
+		Doctor obj = new Doctor();
+		obj.setCrm(rs.getString("crm"));
+		obj.setName(rs.getString("nome"));
+		
+		return obj;
+	}
 
 	private Patient instantiatePatient(ResultSet rs)throws SQLException {
 		Patient obj = new Patient();
 		obj.setCpf(rs.getString("Cpf"));
 		obj.setName(rs.getString("Nome"));
-		obj.setConvenio(rs.getString("Convenio"));
-		obj.setSex(rs.getString("Sexo"));
 		
 		return null;
 	}
@@ -141,7 +166,7 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 	}
 
 
-	private Consultation instantiateConsultation(ResultSet rs, Clinic clinic, Patient patient)throws SQLException {
+	private Consultation instantiateConsultation(ResultSet rs, Doctor doctor, Clinic clinic, Patient patient)throws SQLException {
 		Consultation obj = new Consultation();
 		obj.setProtocol(rs.getInt("Protocolo"));
 		obj.setDate(rs.getDate("Data"));
