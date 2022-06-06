@@ -28,9 +28,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.entities.Clinic;
 import model.entities.Doctor;
-import model.services.ClinicService;
 import model.services.DoctorService;
 
 public class DoctorListController implements Initializable, DataChangeListener {
@@ -48,9 +46,6 @@ public class DoctorListController implements Initializable, DataChangeListener {
 
 	@FXML
 	private TableColumn<Doctor, String> tableColumnSpecialization;
-	
-	@FXML
-	private TableColumn<Clinic, String> tableColumnCnpj;
 
 	@FXML
 	private TableColumn<Doctor, Doctor> tableColumnEDIT;
@@ -80,10 +75,9 @@ public class DoctorListController implements Initializable, DataChangeListener {
 	}
 
 	private void initializeNodes() {
-		tableColumnCnpj.setCellValueFactory(new PropertyValueFactory<>("cnpj"));
+		tableColumnCrm.setCellValueFactory(new PropertyValueFactory<>("crm"));
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		tableColumnSpecialization.setCellValueFactory(new PropertyValueFactory<>("specialization"));
-		tableColumnCnpj.setCellValueFactory(new PropertyValueFactory<>("cnpj"));
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewDoctor.prefHeightProperty().bind(stage.heightProperty());
@@ -107,8 +101,7 @@ public class DoctorListController implements Initializable, DataChangeListener {
 
 			DoctorFormController controller = loader.getController();
 			controller.setDoctor(obj);
-			controller.setServices(new DoctorService(), new ClinicService());
-			controller.loadAssociateObjects();
+			controller.setDoctorService(new DoctorService());
 			controller.subscribeDataChangeListener(this);
 			controller.updateFormData();
 

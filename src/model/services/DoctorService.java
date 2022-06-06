@@ -15,7 +15,7 @@ public class DoctorService {
 	}
 	
 	public void saveOrUpdate(Doctor obj) {
-		if(cnpjInList(obj)) {
+		if(crmInList(obj)) {
 			dao.update(obj);
 		}
 		else {
@@ -23,10 +23,10 @@ public class DoctorService {
 		}
 	}
 	
-	private boolean cnpjInList(Doctor clinic) {
+	private boolean crmInList(Doctor doc) {
 		List<Doctor> list = dao.findAll();
 		for(Doctor obj : list) {
-			if(clinic.getCrm() == obj.getCrm()) {
+			if(doc.getCrm() == obj.getCrm()) {
 				return true;
 			}
 		}

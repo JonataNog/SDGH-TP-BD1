@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DB;
 import db.DbException;
@@ -25,7 +28,7 @@ public class ParentageDaoJDBC implements ParentageDao{
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("INSERT INTO parente "
-										 + "(Cpf, Cpf_parente, Nome, Parentesco) "
+										 + "(cpf_parente, cpf, nome, parentesco) "
 										 + "VALUES "
 										 + "(?, ?, ?, ?)");
 			st.setString(1, obj.getPatient().getCpf());
@@ -48,8 +51,8 @@ public class ParentageDaoJDBC implements ParentageDao{
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("UPDATE parente " 
-										+ "SET Nome = ?, Parentesco = ? "
-										+ "WHERE Cpf = ? and Cpf_parente = ?");
+										+ "SET nome = ?, parentesco = ? "
+										+ "WHERE cpf_parente = ? and cpf = ?");
 			st.setString(1, obj.getName());
 			st.setString(2, obj.getParentage());
 			st.setString(3, obj.getPatient().getCpf());
@@ -70,7 +73,7 @@ public class ParentageDaoJDBC implements ParentageDao{
 	public void delete(Parentage obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("DELETE FROM parente WHERE Cpf = ? and Cpf_parente = ?");
+			st = conn.prepareStatement("DELETE FROM parente WHERE cpf_parente = ? and cpf = ?");
 			st.setString(1, obj.getPatient().getCpf());
 			st.setString(2, obj.getParentageCpf());
 			st.executeUpdate();
@@ -89,9 +92,9 @@ public class ParentageDaoJDBC implements ParentageDao{
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT c.Nome, c.Parentesco, p.PNome "
-									 	+ "FROM clinica as c, parente as p "
-									 	+ "WHERE p.Cpf = ? and c.Cpf = p.Cpf");
+			st = conn.prepareStatement("SELECT p.come, p.parentesco, pa.nome "
+									 	+ "FROM paciente as pa, parente as p "
+									 	+ "WHERE pa.cpf = ? and pa.cpf = p.cpf_parente");
 			st.setString(1, cpf);
 			rs = st.executeQuery();
 			if(rs.next()) {
@@ -109,28 +112,60 @@ public class ParentageDaoJDBC implements ParentageDao{
 			DB.closeResultSet(rs);
 		}
 	}
+	
+	@Override
+	public List<Parentage> findAll() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT paciente.nome as ParenteNome, parente.cpf, parente.nome, parente.parentesco "
+					+ "FROM parente INNER JOIN paciente "
+					+ "ON parente.cpf_parente = paciente.cpf "
+					+ "ORDER BY nome");
+			
+			rs = st.executeQuery();
+			
+			List<Parentage> list = new ArrayList<>();
+			Map<Integer, Patient> map = new HashMap<>();
+			
+			while(rs.next()) {
+				Patient pat = map.get(rs.getString(""));
+				
+				if (pat == null) {
+					pat = instantiatePatient(rs);
+					map.put(rs.getInt("PatientId"), pat);
+				}
+				
+				Parentage obj = instantiateParentage(rs, pat);
+				list.add(obj);
+			}
+			return list;
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+	}
 
 	private Patient instantiatePatient(ResultSet rs) throws SQLException{
 		Patient obj = new Patient();
-		obj.setCpf(rs.getString("Cpf"));
-		obj.setName(rs.getString("Nome"));
-		obj.setConvenio(rs.getString("Convenio"));
-		obj.setSex(rs.getString("Sexo"));
+		obj.setCpf(rs.getString("cpf"));
+		obj.setName(rs.getString("nome"));
+		obj.setConvenio(rs.getString("convenio"));
+		obj.setSex(rs.getString("sexo"));
 		
 		return obj;
 	}
 
-	@Override
-	public List<Parentage> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	private Parentage instantiateParentage(ResultSet rs, Patient pat) throws SQLException {
 		Parentage obj = new Parentage();
-		obj.setParentageCpf(rs.getString("Cpf_parente"));
-		obj.setName(rs.getString("Nome"));
-		obj.setParentage(rs.getString("Parentesco"));
+		obj.setParentageCpf(rs.getString("cpf_parente"));
+		obj.setName(rs.getString("nome"));
+		obj.setParentage(rs.getString("parentesco"));
 		obj.setPatient(pat);
 		
 		return obj;

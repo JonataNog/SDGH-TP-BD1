@@ -23,10 +23,10 @@ public class PatientService {
 		}
 	}
 	
-	private boolean cpfInList(Patient clinic) {
+	private boolean cpfInList(Patient pat) {
 		List<Patient> list = dao.findAll();
 		for(Patient obj : list) {
-			if(clinic.getCpf() == obj.getCpf()) {
+			if(pat.getCpf() == obj.getCpf()) {
 				return true;
 			}
 		}

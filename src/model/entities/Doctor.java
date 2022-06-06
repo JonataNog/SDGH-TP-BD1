@@ -8,16 +8,13 @@ public class Doctor {
 	private String name;
 	private String specialization;
 	
-	private Clinic clinic;
-	
 	public Doctor() {
 	}
 	
-	public Doctor(String crm, String name, String specialization, Clinic clinic) {
+	public Doctor(String crm, String name, String specialization) {
 		this.crm = crm;
 		this.name = name;
 		this.specialization = specialization;
-		this.clinic = clinic;
 	}
 
 	public String getCrm() {
@@ -44,14 +41,6 @@ public class Doctor {
 		this.specialization = specialization;
 	}
 
-	public Clinic getClinic() {
-		return clinic;
-	}
-
-	public void setClinic(Clinic clinic) {
-		this.clinic = clinic;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(crm);
@@ -71,8 +60,7 @@ public class Doctor {
 
 	@Override
 	public String toString() {
-		return "Doctor [crm=" + crm + ", name=" + name + ", specialization=" + specialization + ", clinic=" + clinic.getName()
-				+ "]";
+		return "Doctor [crm=" + crm + ", name=" + name + ", specialization=" + specialization + "]";
 	}
 
 }

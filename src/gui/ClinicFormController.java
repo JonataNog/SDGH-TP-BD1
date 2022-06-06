@@ -154,7 +154,7 @@ public class ClinicFormController implements Initializable{
 		if(fields.contains("name")) {
 			labelErrorName.setText(errors.get("name"));
 		}
-		if(fields.contains("local")) {
+		if(fields.contains("specialization")) {
 			labelErrorLocal.setText(errors.get("local"));
 		}
 	}

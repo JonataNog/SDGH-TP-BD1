@@ -32,7 +32,7 @@ public class MainViewController implements Initializable{
 	private MenuItem menuItemPatient;
 	
 	@FXML
-	private MenuItem menuItemConsultation;
+	private MenuItem menuItemParentage;
 	
 	@FXML
 	private MenuItem menuItemAbout;
@@ -62,8 +62,8 @@ public class MainViewController implements Initializable{
 	}
 	
 	@FXML
-	public void onMenuItemConsultationAction() {
-		System.out.println("onMenuItemConsultationAction");
+	public void onMenuItemParentageAction() {
+		System.out.println("onMenuItemParentage");
 	}
 	
 	@FXML

@@ -25,7 +25,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="CNPJ">
+            <Label text="CRM">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
@@ -35,14 +35,14 @@
                   <Insets left="5.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Local" GridPane.rowIndex="2">
+            <Label text="Specialization" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="txtCnpj" GridPane.columnIndex="1" />
+            <TextField fx:id="txtCrm" GridPane.columnIndex="1" />
             <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txtLocal" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtSpecialization" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
                   <Button fx:id="btSave" mnemonicParsing="false" onAction="#onBtSaveAction" text="Save" />

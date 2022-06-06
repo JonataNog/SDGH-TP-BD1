@@ -23,7 +23,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import model.entities.Patient;
 import model.exceptions.ValidationException;
 import model.services.PatientService;
@@ -46,7 +48,10 @@ public class PatientFormController implements Initializable{
 	private TextField txtConvenio;
 	
 	@FXML
-	private TextField txtSex;
+	private RadioButton rdSex;
+	
+	@FXML
+	private ToggleGroup sexGroup;
 	
 	@FXML
 	private DatePicker dpBirthDate;
@@ -111,10 +116,8 @@ public class PatientFormController implements Initializable{
 		}
 		obj.setName(txtName.getText());
 		obj.setConvenio(txtConvenio.getText());
-		if(txtSex.getText() == null || txtSex.getText().trim().equals("")) {
-			exception.addError("sex", "Field can't be empty");
-		}
-		obj.setSex(txtSex.getText());
+		rdSex = (RadioButton) sexGroup.getSelectedToggle();
+		obj.setSex(rdSex.getText());
 		if(dpBirthDate.getValue() == null) {
 			exception.addError("birthDate", "Field can't be empty");
 		}
@@ -156,7 +159,6 @@ public class PatientFormController implements Initializable{
 		Constraints.setTextFieldMaxLength(txtCpf, 18);
 		Constraints.setTextFieldMaxLength(txtName, 40);
 		Constraints.setTextFieldMaxLength(txtConvenio, 30);
-		Constraints.setTextFieldMaxLength(txtSex, 1);
 		Utils.formatDatePicker(dpBirthDate, "dd/MM/yyyy");
 	}
 	
@@ -167,7 +169,10 @@ public class PatientFormController implements Initializable{
 		txtCpf.setText(entity.getCpf());
 		txtName.setText(entity.getName());
 		txtConvenio.setText(entity.getConvenio());
-		txtSex.setText(entity.getSex());
+		if(rdSex != null) {
+			rdSex = (RadioButton) sexGroup.getSelectedToggle();
+			rdSex.setText(entity.getSex());
+		}
 		if(entity.getBirthDate() != null) {
 			dpBirthDate.setValue(LocalDateTime.ofInstant(entity.getBirthDate().toInstant(), ZoneId.systemDefault()).toLocalDate());
 		}

@@ -1,0 +1,12 @@
+.scroll-pane .viewport {
+    -fx-background-color: #008080;
+    -fx-background-size:cover;
+    -fx-background-repeat: stretch;  
+}
+
+.vbox {
+	-fx-background-image: url('home.jpg');
+    -fx-background-size:cover;
+    -fx-background-repeat: stretch;  
+}
+

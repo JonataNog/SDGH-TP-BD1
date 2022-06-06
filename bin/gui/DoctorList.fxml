@@ -24,14 +24,13 @@
           <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="New" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableViewDoctor" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tableViewDoctor" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/style.css">
         <columns>
-          <TableColumn fx:id="tableColumnCrm" prefWidth="98.0" text="CRM" />
-            <TableColumn fx:id="tableColumnName" prefWidth="166.0" text="Name" />
-          <TableColumn fx:id="tableColumnSpecialization" prefWidth="101.0" text="Specialization" />
-            <TableColumn fx:id="tableColumnCnpj" prefWidth="136.0" text="Clínica" />
-            <TableColumn fx:id="tableColumnEDIT" prefWidth="57.0" />
-            <TableColumn fx:id="tableColumnREMOVE" prefWidth="52.0" />
+          <TableColumn fx:id="tableColumnCrm" prefWidth="126.0" text="CRM" />
+            <TableColumn fx:id="tableColumnName" prefWidth="150.0" text="Name" />
+          <TableColumn fx:id="tableColumnSpecialization" prefWidth="265.0" text="Specialization" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="60.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="75.0" />
         </columns>
       </TableView>
    </children>
