@@ -18,6 +18,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.ClinicService;
 import model.services.DoctorService;
+import model.services.ParentageService;
 import model.services.PatientService;
 
 public class MainViewController implements Initializable{
@@ -63,7 +64,10 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void onMenuItemParentageAction() {
-		System.out.println("onMenuItemParentage");
+		loadView("/gui/ParentageList.fxml", (ParentageListController controller) -> {
+			controller.setParentageService(new ParentageService());
+			controller.updateTableView();
+			});
 	}
 	
 	@FXML

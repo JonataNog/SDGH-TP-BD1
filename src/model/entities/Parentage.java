@@ -2,17 +2,18 @@ package model.entities;
 
 public class Parentage {
 	
-	private String parentageCpf;
+	private String cpf;
 	private String name;
 	private String parentage;
+	private String nameParent;
 	
 	private Patient patient;
 
 	public Parentage() {
 	}
 
-	public Parentage(String parentageCpf, String name, String parentage, Patient patient) {
-		this.parentageCpf = parentageCpf;
+	public Parentage(String cpf, String name, String parentage, Patient patient) {
+		this.cpf = cpf;
 		this.name = name;
 		this.parentage = parentage;
 		this.patient = patient;
@@ -41,19 +42,26 @@ public class Parentage {
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
-
-	public String getParentageCpf() {
-		return parentageCpf;
-	}
-
-	public void setParentageCpf(String parentageCpf) {
-		this.parentageCpf = parentageCpf;
-	}
 	
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getNameParent() {
+		return nameParent;
+	}
+
+	public void setNameParent(Patient obj) {
+		this.nameParent = obj.getName();
+	}
+
 	@Override
 	public String toString() {
-		return "Parentage [parentageCpf=" + parentageCpf + ", name=" + name + ", parentage=" + parentage + ", patient="
-				+ patient + "]";
+		return "Parentage [cpf=" + cpf + ", name=" + name + ", parentage=" + parentage + ", patient=" + patient + "]";
 	}
 
 }

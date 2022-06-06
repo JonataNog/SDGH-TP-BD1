@@ -1,0 +1,39 @@
+package model.services;
+
+import java.util.List;
+
+import model.dao.DaoFactory;
+import model.dao.ParentageDao;
+import model.entities.Parentage;
+
+public class ParentageService {
+	
+	private ParentageDao dao = DaoFactory.createParentageDao();
+	
+	public List<Parentage> findAll(){
+		return dao.findAll();
+	}
+	
+	public void saveOrUpdate(Parentage obj) {
+		if(cpfsInList(obj)) {
+			dao.update(obj);
+		}
+		else {
+			dao.insert(obj);
+		}
+	}
+	
+	private boolean cpfsInList(Parentage parentage) {
+		List<Parentage> list = dao.findAll();
+		for(Parentage obj : list) {
+			if(parentage.getCpf() == obj.getCpf() && parentage.getPatient().getCpf() == obj.getPatient().getCpf()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void remove(Parentage obj) {
+		dao.delete(obj);
+	}
+}

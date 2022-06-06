@@ -32,7 +32,7 @@ public class ParentageDaoJDBC implements ParentageDao{
 										 + "VALUES "
 										 + "(?, ?, ?, ?)");
 			st.setString(1, obj.getPatient().getCpf());
-			st.setString(2, obj.getParentageCpf());
+			st.setString(2, obj.getCpf());
 			st.setString(3, obj.getName());
 			st.setString(4, obj.getParentage());
 			st.executeUpdate();
@@ -56,7 +56,7 @@ public class ParentageDaoJDBC implements ParentageDao{
 			st.setString(1, obj.getName());
 			st.setString(2, obj.getParentage());
 			st.setString(3, obj.getPatient().getCpf());
-			st.setString(4, obj.getParentageCpf());
+			st.setString(4, obj.getCpf());
 			st.executeUpdate();
 			
 		}
@@ -75,7 +75,7 @@ public class ParentageDaoJDBC implements ParentageDao{
 		try {
 			st = conn.prepareStatement("DELETE FROM parente WHERE cpf_parente = ? and cpf = ?");
 			st.setString(1, obj.getPatient().getCpf());
-			st.setString(2, obj.getParentageCpf());
+			st.setString(2, obj.getCpf());
 			st.executeUpdate();
 		}
 		catch(SQLException e) {
@@ -119,22 +119,22 @@ public class ParentageDaoJDBC implements ParentageDao{
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT paciente.nome as ParenteNome, parente.cpf, parente.nome, parente.parentesco "
-					+ "FROM parente INNER JOIN paciente "
-					+ "ON parente.cpf_parente = paciente.cpf "
+					"SELECT paciente.nome as ParentName, p.* "
+					+ "FROM parente as p, paciente "
+					+ "WHERE p.cpf_parente = paciente.cpf "
 					+ "ORDER BY nome");
 			
 			rs = st.executeQuery();
 			
 			List<Parentage> list = new ArrayList<>();
-			Map<Integer, Patient> map = new HashMap<>();
+			Map<String, Patient> map = new HashMap<>();
 			
 			while(rs.next()) {
-				Patient pat = map.get(rs.getString(""));
+				Patient pat = map.get(rs.getString("cpf_parente"));
 				
 				if (pat == null) {
 					pat = instantiatePatient(rs);
-					map.put(rs.getInt("PatientId"), pat);
+					map.put(rs.getString("cpf_parente"), pat);
 				}
 				
 				Parentage obj = instantiateParentage(rs, pat);
@@ -153,20 +153,19 @@ public class ParentageDaoJDBC implements ParentageDao{
 
 	private Patient instantiatePatient(ResultSet rs) throws SQLException{
 		Patient obj = new Patient();
-		obj.setCpf(rs.getString("cpf"));
-		obj.setName(rs.getString("nome"));
-		obj.setConvenio(rs.getString("convenio"));
-		obj.setSex(rs.getString("sexo"));
+		obj.setCpf(rs.getString("cpf_parente"));
+		obj.setName(rs.getString("ParentName"));
 		
 		return obj;
 	}
 
 	private Parentage instantiateParentage(ResultSet rs, Patient pat) throws SQLException {
 		Parentage obj = new Parentage();
-		obj.setParentageCpf(rs.getString("cpf_parente"));
+		obj.setCpf(rs.getString("cpf"));
 		obj.setName(rs.getString("nome"));
 		obj.setParentage(rs.getString("parentesco"));
 		obj.setPatient(pat);
+		obj.setNameParent(pat);
 		
 		return obj;
 	}
