@@ -132,7 +132,7 @@ public class DoctorFormController implements Initializable{
 	
 	private void initializeNodes() {
 		Constraints.setTextFieldMaxLength(txtCrm, 9);
-		Constraints.setTextFieldMaxLength(txtName, 40);
+		Constraints.setTextFieldMaxLength(txtName, 15);
 		Constraints.setTextFieldMaxLength(txtSpecialization, 30);
 	}
 	

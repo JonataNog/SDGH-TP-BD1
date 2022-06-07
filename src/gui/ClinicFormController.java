@@ -132,17 +132,18 @@ public class ClinicFormController implements Initializable{
 	
 	private void initializeNodes() {
 		Constraints.setTextFieldMaxLength(txtCnpj, 18);
-		Constraints.setTextFieldMaxLength(txtName, 40);
-		Constraints.setTextFieldMaxLength(txtLocal, 30);
+		Constraints.setTextFieldMaxLength(txtName, 15);
+		Constraints.setTextFieldMaxLength(txtLocal, 60);
 	}
 	
 	public void updateFormData() {
 		if (entity == null) {
 			throw new IllegalStateException("Entity was null");
 		}
+		txtLocal.setText(entity.getLocal());
 		txtCnpj.setText(entity.getCnpj());
 		txtName.setText(entity.getName());
-		txtLocal.setText(entity.getLocal());
+		
 	}
 
 	public void setErrorMessages(Map<String, String> errors) {

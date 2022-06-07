@@ -154,8 +154,8 @@ public class ParentageFormController implements Initializable {
 	private void initializeNodes() {
 		initializeComboBoxPatient();
 		Constraints.setTextFieldMaxLength(txtCpf, 14);
-		Constraints.setTextFieldMaxLength(txtName, 40);
-		Constraints.setTextFieldMaxLength(txtParentage, 30);
+		Constraints.setTextFieldMaxLength(txtName, 15);
+		Constraints.setTextFieldMaxLength(txtParentage, 15);
 	}
 
 	public void updateFormData() {

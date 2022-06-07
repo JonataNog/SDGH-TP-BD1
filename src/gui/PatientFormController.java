@@ -157,8 +157,8 @@ Patient obj = new Patient();
 	
 	private void initializeNodes() {
 		Constraints.setTextFieldMaxLength(txtCpf, 18);
-		Constraints.setTextFieldMaxLength(txtName, 40);
-		Constraints.setTextFieldMaxLength(txtConvenio, 30);
+		Constraints.setTextFieldMaxLength(txtName, 15);
+		Constraints.setTextFieldMaxLength(txtConvenio, 15);
 		Utils.formatDatePicker(dpBirthDate, "dd/MM/yyyy");
 		
 	}
