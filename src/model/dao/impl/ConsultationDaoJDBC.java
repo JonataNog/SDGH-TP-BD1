@@ -114,9 +114,9 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT c.*, m.nome as NomeMedico, cl.nome as NomeClinica, p.nome  as NomePaciente "
+			st = conn.prepareStatement("SELECT c.*, m.nome as DoctorName, cl.nome as ClinicName, p.nome  as PatientName "
 									 	+ "FROM consulta as c, medico as m, clinica as cl, paciente as p "
-									 	+ "WHERE c.protocolo = ?");
+									 	+ "WHERE c.protocolo = ? and c.cpf = p.cpf and c.crm = m.crm and c.cnpj = cl.cnpj");
 			st.setInt(1, protocol);
 			rs = st.executeQuery();
 			
@@ -144,7 +144,7 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT c.*, m.nome as NomeMedico, cl.nome as NomeClinica, p.nome  as NomePaciente "
+			st = conn.prepareStatement("SELECT c.*, m.nome as DoctorName, cl.nome as ClinicName, p.nome  as PatientName "
 									 	+ "FROM consulta as c, medico as m, clinica as cl, paciente as p "
 									 	+ "WHERE c.cpf = ?");
 			st.setString(1, patient.getCpf());

@@ -20,7 +20,7 @@ public class ConsultationService {
 	}
 	
 	public List<Consultation> findByPatient(Patient patient){
-		return dao.findByPatient(null);
+		return dao.findByPatient(patient);
 	}
 	
 	public void saveOrUpdate(Consultation obj) {

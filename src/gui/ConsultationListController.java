@@ -22,14 +22,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Consultation;
+import model.entities.Patient;
 import model.services.ClinicService;
 import model.services.ConsultationService;
 import model.services.DoctorService;
@@ -38,6 +41,12 @@ import model.services.PatientService;
 public class ConsultationListController implements Initializable, DataChangeListener {
 
 	private ConsultationService service;
+	
+	@FXML
+	private ComboBox<Patient> comboBoxPatient;
+	
+	@FXML
+	private TextField txtSearchProtocol;
 
 	@FXML
 	private TableView<Consultation> tableViewConsultation;
@@ -68,6 +77,12 @@ public class ConsultationListController implements Initializable, DataChangeList
 
 	@FXML
 	private TableColumn<Consultation, Consultation> tableColumnREMOVE;
+	
+	@FXML
+	private Button btSearchProtocol;
+	
+	@FXML
+	private Button btSearchPatient;
 
 	@FXML
 	private Button btNew;
@@ -79,6 +94,22 @@ public class ConsultationListController implements Initializable, DataChangeList
 		Stage parentStage = Utils.currentStage(event);
 		Consultation obj = new Consultation();
 		createDialogForm(obj, "/gui/ConsultationForm.fxml", parentStage);
+	}
+	
+	@FXML
+	public void onBtSearchProtocolAction() {
+		try {
+			Integer protocol = Utils.tryParseToInt(txtSearchProtocol.getText());
+			Consultation obj = service.findByProtocol(protocol);
+			obsList = FXCollections.observableArrayList(obj);
+			tableViewConsultation.setItems(obsList);
+			initEditButtons();
+			initRemoveButtons();
+		}
+		catch(NullPointerException e) {
+			Alerts.showAlert("Error", "Field can't be empty",null, AlertType.ERROR);
+		}
+		
 	}
 
 	public void setConsultationService(ConsultationService service) {
