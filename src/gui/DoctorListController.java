@@ -24,6 +24,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -34,6 +35,9 @@ import model.services.DoctorService;
 public class DoctorListController implements Initializable, DataChangeListener {
 
 	private DoctorService service;
+	
+	@FXML
+	private TextField txtSearchCrm;
 
 	@FXML
 	private TableView<Doctor> tableViewDoctor;
@@ -55,6 +59,12 @@ public class DoctorListController implements Initializable, DataChangeListener {
 
 	@FXML
 	private Button btNew;
+	
+	@FXML
+	private Button btSearchCrm;
+	
+	@FXML
+	private Button btSearchFindAll;
 
 	private ObservableList<Doctor> obsList;
 
@@ -63,6 +73,35 @@ public class DoctorListController implements Initializable, DataChangeListener {
 		Stage parentStage = Utils.currentStage(event);
 		Doctor obj = new Doctor();
 		createDialogForm(obj, "/gui/DoctorForm.fxml", parentStage);
+	}
+	
+	@FXML
+	public void onBtSearchCrmAction()  {
+		try {
+			if (txtSearchCrm.getText() == null || txtSearchCrm.getText().trim().equals("")) {
+				Alerts.showAlert("Error", "Field can't be empty",null, AlertType.ERROR);
+			}
+			else {
+				String crm = txtSearchCrm.getText();
+				Doctor obj = service.findByCrm(crm);
+				if (obj == null) {
+					throw new NullPointerException();
+				}
+				obsList = FXCollections.observableArrayList(obj);
+				tableViewDoctor.setItems(obsList);
+				initEditButtons();
+				initRemoveButtons();
+			}
+		}
+		catch(NullPointerException e) {
+			Alerts.showAlert("Error", "CRM not exist",null, AlertType.ERROR);
+		}
+	
+	}
+	
+	@FXML
+	public void onBtSearchFindAllAction() {
+		updateTableView();
 	}
 
 	public void setDoctorService(DoctorService service) {

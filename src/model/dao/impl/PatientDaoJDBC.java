@@ -93,7 +93,7 @@ public class PatientDaoJDBC implements PatientDao{
 		try {
 			st = conn.prepareStatement("SELECT p.* "
 									 	+ "FROM paciente as p "
-									 	+ "WHERE c.cpf = ?");
+									 	+ "WHERE p.cpf = ?");
 			st.setString(1, cpf);
 			rs = st.executeQuery();
 			if(rs.next()) {

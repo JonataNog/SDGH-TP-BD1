@@ -21,6 +21,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -28,13 +31,20 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.entities.Parentage;
+import model.entities.Patient;
 import model.services.ParentageService;
 import model.services.PatientService;
 
 public class ParentageListController implements Initializable, DataChangeListener {
 
 	private ParentageService service;
+	private PatientService patientService = new PatientService();
+	private ObservableList<Patient> obsListPatient;
+	
+	@FXML 
+	private ComboBox<Patient> comboBoxPatient;
 
 	@FXML
 	private TableView<Parentage> tableViewParentage;
@@ -59,6 +69,12 @@ public class ParentageListController implements Initializable, DataChangeListene
 
 	@FXML
 	private Button btNew;
+	
+	@FXML
+	private Button btSearchParent;
+	
+	@FXML
+	private Button btSearchFindAll;
 
 	private ObservableList<Parentage> obsList;
 
@@ -67,6 +83,20 @@ public class ParentageListController implements Initializable, DataChangeListene
 		Stage parentStage = Utils.currentStage(event);
 		Parentage obj = new Parentage();
 		createDialogForm(obj, "/gui/ParentageForm.fxml", parentStage);
+	}
+	
+	public void onBtSearchPatientAction() {
+		Patient pat = comboBoxPatient.getValue();
+		List<Parentage> list = service.findByPatient(pat);
+		obsList = FXCollections.observableArrayList(list);
+		tableViewParentage.setItems(obsList);
+		initEditButtons();
+		initRemoveButtons();
+	}
+	
+	@FXML
+	public void onBtSearchFindAllAction() {
+		updateTableView();
 	}
 
 	public void setParentageService(ParentageService service) {
@@ -83,6 +113,8 @@ public class ParentageListController implements Initializable, DataChangeListene
 		tableColumnCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		tableColumnParentage.setCellValueFactory(new PropertyValueFactory<>("parentage"));
+		initializeComboBoxPatient();
+		loadAssociatedObjetcs();
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewParentage.prefHeightProperty().bind(stage.heightProperty());
@@ -179,6 +211,27 @@ public class ParentageListController implements Initializable, DataChangeListene
 				Alerts.showAlert("Error removing object", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
+	}
+	
+	private void initializeComboBoxPatient() {
+		Callback<ListView<Patient>, ListCell<Patient>> factory = lv -> new ListCell<Patient>() {
+			@Override
+			protected void updateItem(Patient item, boolean empty) {
+				super.updateItem(item, empty);
+				setText(empty ? "" : item.getName());
+			}
+		};
+		comboBoxPatient.setCellFactory(factory);
+		comboBoxPatient.setButtonCell(factory.call(null));
+	}
+	
+	public void loadAssociatedObjetcs() {
+		if (patientService == null) {
+			throw new IllegalStateException("PatientService was null");
+		}
+		List<Patient> listPatient = patientService.findAll();
+		obsListPatient = FXCollections.observableArrayList(listPatient);
+		comboBoxPatient.setItems(obsListPatient);
 	}
 
 }

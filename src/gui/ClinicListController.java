@@ -94,7 +94,7 @@ public class ClinicListController implements Initializable, DataChangeListener {
 			}
 		}
 		catch(NullPointerException e) {
-			Alerts.showAlert("Error", "Protocol not exist",null, AlertType.ERROR);
+			Alerts.showAlert("Error", "CRM not exist",null, AlertType.ERROR);
 		}
 	}
 	

@@ -5,6 +5,7 @@ import java.util.List;
 import model.dao.DaoFactory;
 import model.dao.ParentageDao;
 import model.entities.Parentage;
+import model.entities.Patient;
 
 public class ParentageService {
 	
@@ -12,6 +13,10 @@ public class ParentageService {
 	
 	public List<Parentage> findAll(){
 		return dao.findAll();
+	}
+	
+	public List<Parentage> findByPatient(Patient patient){
+		return dao.findByPatient(patient);
 	}
 	
 	public void saveOrUpdate(Parentage obj) {

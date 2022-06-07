@@ -14,6 +14,10 @@ public class PatientService {
 		return dao.findAll();
 	}
 	
+	public Patient findByCpf(String cpf) {
+		return dao.findByCpf(cpf);
+	}
+	
 	public void saveOrUpdate(Patient obj) {
 		if(cpfInList(obj)) {
 			dao.update(obj);

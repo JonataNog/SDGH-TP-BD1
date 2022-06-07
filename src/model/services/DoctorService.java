@@ -14,6 +14,10 @@ public class DoctorService {
 		return dao.findAll();
 	}
 	
+	public Doctor findByCrm(String crm) {
+		return dao.findByCrm(crm);
+	}
+	
 	public void saveOrUpdate(Doctor obj) {
 		if(crmInList(obj)) {
 			dao.update(obj);

@@ -86,23 +86,30 @@ public class ParentageDaoJDBC implements ParentageDao{
 		}
 		
 	}
-
+	
 	@Override
-	public Parentage findByCpfs(String cpf) {
+	public List<Parentage> findByPatient(Patient patient){
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT p.come, p.parentesco, pa.nome "
-									 	+ "FROM paciente as pa, parente as p "
-									 	+ "WHERE pa.cpf = ? and pa.cpf = p.cpf_parente");
-			st.setString(1, cpf);
+			st = conn.prepareStatement("SELECT paciente.nome as ParentName, parente.* "
+									 	+ "FROM paciente,  parente "
+									 	+ "WHERE ? = parente.cpf_parente and paciente.cpf = parente.cpf_parente");
+			st.setString(1, patient.getCpf());
 			rs = st.executeQuery();
-			if(rs.next()) {
-				Patient pat = instantiatePatient(rs);
+			
+			List<Parentage> list = new ArrayList<>();
+			Map<String, Patient> mapPatient = new HashMap<>();
+			
+			while(rs.next()) {
+				Patient pat = mapPatient.get(rs.getString("cpf"));
+				if(pat == null) {
+					pat = instantiatePatient(rs);
+				}
 				Parentage obj = instantiateParentage(rs, pat);
-				return obj;
+				list.add(obj);
 			}
-			return null;
+			return list;
 		}
 		catch(SQLException e) {
 			throw new DbException(e.getMessage());

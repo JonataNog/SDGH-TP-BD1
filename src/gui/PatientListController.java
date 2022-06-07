@@ -25,6 +25,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -35,6 +36,9 @@ import model.services.PatientService;
 public class PatientListController implements Initializable, DataChangeListener {
 
 	private PatientService service;
+	
+	@FXML
+	private TextField txtSearchCpf;
 
 	@FXML
 	private TableView<Patient> tableViewPatient;
@@ -62,6 +66,12 @@ public class PatientListController implements Initializable, DataChangeListener 
 
 	@FXML
 	private Button btNew;
+	
+	@FXML
+	private Button btSearchCpf;
+	
+	@FXML
+	private Button btSearchFindAll;
 
 	private ObservableList<Patient> obsList;
 
@@ -70,6 +80,34 @@ public class PatientListController implements Initializable, DataChangeListener 
 		Stage parentStage = Utils.currentStage(event);
 		Patient obj = new Patient();
 		createDialogForm(obj, "/gui/PatientForm.fxml", parentStage);
+	}
+	
+	@FXML
+	public void onBtSearchCpfAction()  {
+		try {
+			if (txtSearchCpf.getText() == null || txtSearchCpf.getText().trim().equals("")) {
+				Alerts.showAlert("Error", "Field can't be empty",null, AlertType.ERROR);
+			}
+			else {
+				String cpf = txtSearchCpf.getText();
+				Patient obj = service.findByCpf(cpf);
+				if (obj == null) {
+					throw new NullPointerException();
+				}
+				obsList = FXCollections.observableArrayList(obj);
+				tableViewPatient.setItems(obsList);
+				initEditButtons();
+				initRemoveButtons();
+			}
+		}
+		catch(NullPointerException e) {
+			Alerts.showAlert("Error", "CPF not exist",null, AlertType.ERROR);
+		}
+	}
+	
+	@FXML
+	public void onBtSearchFindAllAction() {
+		updateTableView();
 	}
 
 	public void setPatientService(PatientService service) {

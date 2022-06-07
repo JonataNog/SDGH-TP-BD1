@@ -125,7 +125,6 @@ public class ConsultationListController implements Initializable, DataChangeList
 		catch(NullPointerException e) {
 			Alerts.showAlert("Error", "Protocol not exist",null, AlertType.ERROR);
 		}
-	
 	}
 	
 	public void onBtSearchPatientAction() {
