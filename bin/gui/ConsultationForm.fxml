@@ -31,7 +31,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="ID">
+            <Label text="Protocol">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
