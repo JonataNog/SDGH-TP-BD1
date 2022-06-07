@@ -37,9 +37,9 @@
       </AnchorPane>
       <TableView fx:id="tableViewParentage" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/style.css">
         <columns>
-            <TableColumn fx:id="tableColumnNameParent" prefWidth="129.0" text="Parent Name" />
+            <TableColumn fx:id="tableColumnNameParent" prefWidth="129.0" text="Patient Name" />
           <TableColumn fx:id="tableColumnCpf" prefWidth="108.0" text="CPF" />
-            <TableColumn fx:id="tableColumnName" prefWidth="112.0" text="Name" />
+            <TableColumn fx:id="tableColumnName" prefWidth="112.0" text="Relative's Name" />
             <TableColumn fx:id="tableColumnParentage" prefWidth="97.0" text="Parentage" />
             <TableColumn fx:id="tableColumnEDIT" prefWidth="52.0" />
             <TableColumn fx:id="tableColumnREMOVE" prefWidth="67.0" />
