@@ -23,6 +23,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -31,6 +33,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.entities.Consultation;
 import model.entities.Patient;
 import model.services.ClinicService;
@@ -41,6 +44,8 @@ import model.services.PatientService;
 public class ConsultationListController implements Initializable, DataChangeListener {
 
 	private ConsultationService service;
+	private PatientService patientService = new PatientService();
+	private ObservableList<Patient> obsListPatient;
 	
 	@FXML
 	private ComboBox<Patient> comboBoxPatient;
@@ -83,6 +88,9 @@ public class ConsultationListController implements Initializable, DataChangeList
 	
 	@FXML
 	private Button btSearchPatient;
+	
+	@FXML
+	private Button btSearchFindAll;
 
 	@FXML
 	private Button btNew;
@@ -111,6 +119,20 @@ public class ConsultationListController implements Initializable, DataChangeList
 		}
 		
 	}
+	
+	public void onBtSearchPatientAction() {
+		Patient pat = comboBoxPatient.getValue();
+		List<Consultation> list = service.findByPatient(pat);
+		obsList = FXCollections.observableArrayList(list);
+		tableViewConsultation.setItems(obsList);
+		initEditButtons();
+		initRemoveButtons();
+	}
+	
+	@FXML
+	public void onBtSearchFindAllAction() {
+		updateTableView();
+	}
 
 	public void setConsultationService(ConsultationService service) {
 		this.service = service;
@@ -130,6 +152,8 @@ public class ConsultationListController implements Initializable, DataChangeList
 		tableColumnDoctorName.setCellValueFactory(new PropertyValueFactory<>("doctorName"));
 		tableColumnClinicName.setCellValueFactory(new PropertyValueFactory<>("clinicName"));
 		tableColumnPatientName.setCellValueFactory(new PropertyValueFactory<>("patientName"));
+		initializeComboBoxPatient();
+		loadAssociatedObjetcs();
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewConsultation.prefHeightProperty().bind(stage.heightProperty());
@@ -226,6 +250,27 @@ public class ConsultationListController implements Initializable, DataChangeList
 				Alerts.showAlert("Error removing object", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
+	}
+	
+	private void initializeComboBoxPatient() {
+		Callback<ListView<Patient>, ListCell<Patient>> factory = lv -> new ListCell<Patient>() {
+			@Override
+			protected void updateItem(Patient item, boolean empty) {
+				super.updateItem(item, empty);
+				setText(empty ? "" : item.getName());
+			}
+		};
+		comboBoxPatient.setCellFactory(factory);
+		comboBoxPatient.setButtonCell(factory.call(null));
+	}
+	
+	public void loadAssociatedObjetcs() {
+		if (patientService == null) {
+			throw new IllegalStateException("PatientService was null");
+		}
+		List<Patient> listPatient = patientService.findAll();
+		obsListPatient = FXCollections.observableArrayList(listPatient);
+		comboBoxPatient.setItems(obsListPatient);
 	}
 
 }

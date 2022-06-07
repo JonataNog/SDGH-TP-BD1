@@ -146,7 +146,7 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 		try {
 			st = conn.prepareStatement("SELECT c.*, m.nome as DoctorName, cl.nome as ClinicName, p.nome  as PatientName "
 									 	+ "FROM consulta as c, medico as m, clinica as cl, paciente as p "
-									 	+ "WHERE c.cpf = ?");
+									 	+ "WHERE c.cpf = ? and c.cpf = p.cpf and c.crm = m.crm and c.cnpj = cl.cnpj");
 			st.setString(1, patient.getCpf());
 			rs = st.executeQuery();
 			
@@ -155,7 +155,7 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 			Map<String, Clinic> mapClinic = new HashMap<>();
 			Map<String, Patient> mapPatient = new HashMap<>();
 			
-			if(rs.next()) {
+			while(rs.next()) {
 				Doctor doc = mapDoctor.get(rs.getString("crm"));
 				if(doc == null) {
 					doc = instantiateDoctor(rs);

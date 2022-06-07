@@ -34,7 +34,9 @@
             <Button fx:id="btSearchProtocol" layoutX="275.0" layoutY="10.0" mnemonicParsing="false" onAction="#onBtSearchProtocolAction" text="Search" />
             <Label layoutX="349.0" layoutY="14.0" text="Search for patient" />
             <ComboBox fx:id="comboBoxPatient" layoutX="450.0" layoutY="10.0" prefWidth="150.0" />
-            <Button fx:id="btSearchPatient" layoutX="607.0" layoutY="10.0" mnemonicParsing="false" text="Search" />
+            <Button fx:id="btSearchPatient" layoutX="607.0" layoutY="10.0" mnemonicParsing="false" onAction="#onBtSearchPatientAction" text="Search" />
+            <Label layoutX="673.0" layoutY="14.0" text="Find All" />
+            <Button fx:id="btSearchFindAll" layoutX="719.0" layoutY="10.0" mnemonicParsing="false" onAction="#onBtSearchFindAllAction" text="Search" />
          </children>
       </AnchorPane>
       <TableView fx:id="tableViewConsultation" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/style.css">
