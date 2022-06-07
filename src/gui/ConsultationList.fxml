@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="469.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ParentageListController">
+<VBox prefHeight="469.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ConsultationListController">
    <children>
-      <Label text="Parentage Registration">
+      <Label text="Consultation Registration">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -24,13 +24,16 @@
           <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="New" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableViewParentage" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/style.css">
+      <TableView fx:id="tableViewConsultation" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/style.css">
         <columns>
-            <TableColumn fx:id="tableColumnNameParent" prefWidth="129.0" text="Parent Name" />
-          <TableColumn fx:id="tableColumnCpf" prefWidth="108.0" text="CPF" />
-            <TableColumn fx:id="tableColumnName" prefWidth="112.0" text="Name" />
-            <TableColumn fx:id="tableColumnParentage" prefWidth="97.0" text="Parentage" />
-            <TableColumn fx:id="tableColumnEDIT" prefWidth="52.0" />
+            <TableColumn fx:id="tableColumnProtocol" prefWidth="85.0" text="Protocol" />
+          <TableColumn fx:id="tableColumnDate" prefWidth="102.0" text="Date" />
+            <TableColumn fx:id="tableColumnLaudo" prefWidth="109.0" text="Laudo" />
+            <TableColumn fx:id="tableColumnMedication" prefWidth="150.0" text="Medication" />
+            <TableColumn fx:id="tableColumnDoctorName" prefWidth="82.0" text="Doctor Name" />
+            <TableColumn fx:id="tableColumnClinicName" prefWidth="75.0" text="Clinic Name" />
+            <TableColumn fx:id="tableColumnPatientNome" prefWidth="89.0" text="Patient Name" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="31.0" />
             <TableColumn fx:id="tableColumnREMOVE" prefWidth="67.0" />
         </columns>
       </TableView>

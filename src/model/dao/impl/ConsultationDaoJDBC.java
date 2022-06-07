@@ -6,7 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DB;
 import db.DbException;
@@ -29,7 +32,7 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("INSERT INTO consulta "
-										 + "(data, laudo, medicacao, crm, cpf, cnpj) "
+										 + "(data, laudo, medicação, crm, cpf, cnpj) "
 										 + "VALUES "
 										 + "(?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			
@@ -111,20 +114,21 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT c.protocolo, c.data, c.laudo, c.medicacao, m.nome as NomeMedico, "
-					+ "cl.nome as NomeClinica, p.nome  as NomePaciente "
+			st = conn.prepareStatement("SELECT c.*, m.nome as NomeMedico, cl.nome as NomeClinica, p.nome  as NomePaciente "
 									 	+ "FROM consulta as c, medico as m, clinica as cl, paciente as p "
-									 	+ "WHERE c.protocolo = ? and c.crm = m.crm and c.cnpj = cl.cnpj and c.cpf = p.cpf");
+									 	+ "WHERE c.protocolo = ?");
 			st.setInt(1, protocol);
 			rs = st.executeQuery();
+			
 			if(rs.next()) {
-				Doctor doctor = instantiateDoctor(rs);
 				Clinic clinic = instantiateClinic(rs);
-				Patient patient = instantiatePatient(rs);
-				Consultation obj = instantiateConsultation(rs, doctor, clinic, patient);
+				Doctor doc = instantiateDoctor(rs);
+				Patient pat = instantiatePatient(rs);
+				Consultation obj = instantiateConsultation(rs, doc, clinic, pat);
 				return obj;
 			}
 			return null;
+		
 		}
 		catch(SQLException e) {
 			throw new DbException(e.getMessage());
@@ -136,15 +140,96 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 	}
 	
 	@Override
+	public List<Consultation> findByPatient(Patient patient) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("SELECT c.*, m.nome as NomeMedico, cl.nome as NomeClinica, p.nome  as NomePaciente "
+									 	+ "FROM consulta as c, medico as m, clinica as cl, paciente as p "
+									 	+ "WHERE c.cpf = ?");
+			st.setString(1, patient.getCpf());
+			rs = st.executeQuery();
+			
+			List<Consultation> list = new ArrayList<>();
+			Map<String, Doctor> mapDoctor = new HashMap<>();
+			Map<String, Clinic> mapClinic = new HashMap<>();
+			Map<String, Patient> mapPatient = new HashMap<>();
+			
+			if(rs.next()) {
+				Doctor doc = mapDoctor.get(rs.getString("crm"));
+				if(doc == null) {
+					doc = instantiateDoctor(rs);
+				}
+				Clinic clinic = mapClinic.get(rs.getString("cnpj"));
+				if(clinic == null) {
+					clinic = instantiateClinic(rs);
+				}
+				Patient pat = mapPatient.get(rs.getString("cpf"));
+				if(pat == null) {
+					pat = instantiatePatient(rs);
+				}
+				Consultation obj = instantiateConsultation(rs, doc, clinic, pat);
+				list.add(obj);
+			}
+			return list;
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+	}
+
+	@Override
 	public List<Consultation> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("SELECT medico.nome as NomeMedico, clinica.nome as NomeClinica, paciente.nome as NomePaciente, consulta.* "
+				 	+ "FROM consulta, medico, clinica, paciente "
+				 	+ "WHERE consulta.cpf = paciente.cpf and consulta.crm = medico.crm and consulta.cnpj = clinica.cnpj "
+				 	+ "ORDER BY protocolo");
+			
+			rs = st.executeQuery();
+			
+			List<Consultation> list = new ArrayList<>();
+			Map<String, Doctor> mapDoctor = new HashMap<>();
+			Map<String, Clinic> mapClinic = new HashMap<>();
+			Map<String, Patient> mapPatient = new HashMap<>();
+			
+			if(rs.next()) {
+				Doctor doc = mapDoctor.get(rs.getString("crm"));
+				if(doc == null) {
+					doc = instantiateDoctor(rs);
+				}
+				Clinic clinic = mapClinic.get(rs.getString("cnpj"));
+				if(clinic == null) {
+					clinic = instantiateClinic(rs);
+				}
+				Patient pat = mapPatient.get(rs.getString("cpf"));
+				if(pat == null) {
+					pat = instantiatePatient(rs);
+				}
+				Consultation obj = instantiateConsultation(rs, doc, clinic, pat);
+				list.add(obj);
+			}
+			return list;
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
 	}
 	
 	private Doctor instantiateDoctor(ResultSet rs) throws SQLException{
 		Doctor obj = new Doctor();
 		obj.setCrm(rs.getString("crm"));
-		obj.setName(rs.getString("nome"));
+		obj.setName(rs.getString("NomeMedico"));
 		
 		return obj;
 	}
@@ -152,7 +237,7 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 	private Patient instantiatePatient(ResultSet rs)throws SQLException {
 		Patient obj = new Patient();
 		obj.setCpf(rs.getString("Cpf"));
-		obj.setName(rs.getString("Nome"));
+		obj.setName(rs.getString("NomePaciente"));
 		
 		return null;
 	}
@@ -160,7 +245,7 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 	private Clinic instantiateClinic(ResultSet rs)throws SQLException {
 		Clinic obj = new Clinic();
 		obj.setCnpj(rs.getString("Cnpj"));
-		obj.setName(rs.getString("Nome"));
+		obj.setName(rs.getString("NomeClinica"));
 		
 		return obj;
 	}
@@ -168,10 +253,9 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 
 	private Consultation instantiateConsultation(ResultSet rs, Doctor doctor, Clinic clinic, Patient patient)throws SQLException {
 		Consultation obj = new Consultation();
-		obj.setProtocol(rs.getInt("Protocolo"));
-		obj.setDate(rs.getDate("Data"));
+		obj.setDate(new java.util.Date(rs.getTimestamp("data").getTime()));
 		obj.setLaudo(rs.getString("Laudo"));
-		obj.setMedication(rs.getString("Medicacao"));
+		obj.setMedication(rs.getString("medicação"));
 		obj.setClinic(clinic);
 		obj.setPatient(patient);
 		

@@ -9,6 +9,9 @@ public class Consultation {
 	private String medication;
 	private String laudo;
 	private Date date;
+	private String nameDoctor;
+	private String nameClinic;
+	private String namePatient;
 	
 	private Doctor doctor;
 	private Clinic clinic;
@@ -84,6 +87,30 @@ public class Consultation {
 
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
+	}
+
+	public String getNameDoctor() {
+		return nameDoctor;
+	}
+
+	public void setNameDoctor(Doctor doctor) {
+		this.nameDoctor = doctor.getName();
+	}
+
+	public String getNameClinic() {
+		return nameClinic;
+	}
+
+	public void setNameClinic(Clinic clinic) {
+		this.nameClinic = clinic.getName();
+	}
+
+	public String getNamePatient() {
+		return namePatient;
+	}
+
+	public void setNamePatient(Patient patient) {
+		this.namePatient = patient.getName();
 	}
 
 	@Override

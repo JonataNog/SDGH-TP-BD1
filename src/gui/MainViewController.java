@@ -17,6 +17,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.ClinicService;
+import model.services.ConsultationService;
 import model.services.DoctorService;
 import model.services.ParentageService;
 import model.services.PatientService;
@@ -43,7 +44,10 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void onMenuItemConsultationsAction() {
-		loadView("/gui/MainView.fxml", x-> {});
+		loadView("/gui/ConsultationList.fxml", (ConsultationListController controller) -> {
+			controller.setConsultationService(new ConsultationService());
+			controller.updateTableView();
+			});
 	}
 	
 	@FXML
@@ -106,6 +110,7 @@ public class MainViewController implements Initializable{
 			initializingAction.accept(controller);
 		}
 		catch(IOException e) {
+			e.printStackTrace();
 			Alerts.showAlert("IOException", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}

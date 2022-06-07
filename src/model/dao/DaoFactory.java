@@ -29,12 +29,4 @@ public class DaoFactory {
 		return new ParentageDaoJDBC(DB.getConnection());
 	}
 	
-	public static HistoricParentageDao createHistoricParentageDao() {
-		return null;
-	}
-	
-	public static HistoricPatientDao createHistoricPatientDao() {
-		return null;
-	}
-	
 }

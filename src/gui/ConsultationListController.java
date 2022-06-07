@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -28,48 +29,59 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.entities.Parentage;
-import model.services.ParentageService;
+import model.entities.Consultation;
+import model.services.ClinicService;
+import model.services.ConsultationService;
+import model.services.DoctorService;
 import model.services.PatientService;
 
 public class ConsultationListController implements Initializable, DataChangeListener {
 
-	private ParentageService service;
+	private ConsultationService service;
 
 	@FXML
-	private TableView<Parentage> tableViewParentage;
+	private TableView<Consultation> tableViewConsultation;
 
 	@FXML
-	private TableColumn<Parentage, String> tableColumnNameParent;
+	private TableColumn<Consultation, String> tableColumnProtocol;
 
 	@FXML
-	private TableColumn<Parentage, String> tableColumnCpf;
+	private TableColumn<Consultation, Date> tableColumnDate;
 
 	@FXML
-	private TableColumn<Parentage, String> tableColumnName;
+	private TableColumn<Consultation, String> tableColumnLaudo;
 	
 	@FXML
-	private TableColumn<Parentage, String> tableColumnParentage;
+	private TableColumn<Consultation, String> tableColumnMedication;
 
 	@FXML
-	private TableColumn<Parentage, Parentage> tableColumnEDIT;
+	private TableColumn<Consultation, String> tableColumnDoctorName;
+	
+	@FXML
+	private TableColumn<Consultation, String> tableColumnClinicName;
+	
+	@FXML
+	private TableColumn<Consultation, String> tableColumnPatientNome;
 
 	@FXML
-	private TableColumn<Parentage, Parentage> tableColumnREMOVE;
+	private TableColumn<Consultation, Consultation> tableColumnEDIT;
+
+	@FXML
+	private TableColumn<Consultation, Consultation> tableColumnREMOVE;
 
 	@FXML
 	private Button btNew;
 
-	private ObservableList<Parentage> obsList;
+	private ObservableList<Consultation> obsList;
 
 	@FXML
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		Parentage obj = new Parentage();
-		createDialogForm(obj, "/gui/ParentageForm.fxml", parentStage);
+		Consultation obj = new Consultation();
+		createDialogForm(obj, "/gui/ConsultationForm.fxml", parentStage);
 	}
 
-	public void setParentageService(ParentageService service) {
+	public void setConsultationService(ConsultationService service) {
 		this.service = service;
 	}
 
@@ -79,40 +91,41 @@ public class ConsultationListController implements Initializable, DataChangeList
 	}
 
 	private void initializeNodes() {
-		tableColumnNameParent.setCellValueFactory(new PropertyValueFactory<>("nameParent"));
-		tableColumnCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
-		tableColumnParentage.setCellValueFactory(new PropertyValueFactory<>("parentage"));
+		tableColumnProtocol.setCellValueFactory(new PropertyValueFactory<>("protocol"));
+		tableColumnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+		Utils.formatTableColumnDate(tableColumnDate, "dd/MM/yyyy");
+		tableColumnLaudo.setCellValueFactory(new PropertyValueFactory<>("laudo"));
+		tableColumnMedication.setCellValueFactory(new PropertyValueFactory<>("medication"));
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
-		tableViewParentage.prefHeightProperty().bind(stage.heightProperty());
+		tableViewConsultation.prefHeightProperty().bind(stage.heightProperty());
 	}
 
 	public void updateTableView() {
 		if (service == null) {
 			throw new IllegalStateException("Service was null");
 		}
-		List<Parentage> list = service.findAll();
+		List<Consultation> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
-		tableViewParentage.setItems(obsList);
+		tableViewConsultation.setItems(obsList);
 		initEditButtons();
 		initRemoveButtons();
 	}
 
-	private void createDialogForm(Parentage obj, String absoluteName, Stage parentStage) {
+	private void createDialogForm(Consultation obj, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
 
-			ParentageFormController controller = loader.getController();
-			controller.setParentage(obj);
-			controller.setServices(new ParentageService(), new PatientService());
+			ConsultationFormController controller = loader.getController();
+			controller.setConsultation(obj);
+			controller.setServices(new ConsultationService(), new PatientService(), new DoctorService(), new ClinicService());
 			controller.loadAssociatedObjetcs();
 			controller.subscribeDataChangeListener(this);
 			controller.updateFormData();
 
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Enter Parentage data");
+			dialogStage.setTitle("Enter Consultation data");
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.setResizable(false);
 			dialogStage.initOwner(parentStage);
@@ -130,29 +143,29 @@ public class ConsultationListController implements Initializable, DataChangeList
 
 	private void initEditButtons() {
 		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnEDIT.setCellFactory(param -> new TableCell<Parentage, Parentage>() {
+		tableColumnEDIT.setCellFactory(param -> new TableCell<Consultation, Consultation>() {
 			private final Button button = new Button("edit");
 
 			@Override
-			protected void updateItem(Parentage obj, boolean empty) {
+			protected void updateItem(Consultation obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
 					return;
 				}
 				setGraphic(button);
-				button.setOnAction(event -> createDialogForm(obj, "/gui/ParentageForm.fxml", Utils.currentStage(event)));
+				button.setOnAction(event -> createDialogForm(obj, "/gui/ConsultationForm.fxml", Utils.currentStage(event)));
 			}
 		});
 	}
 
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnREMOVE.setCellFactory(param -> new TableCell<Parentage, Parentage>() {
+		tableColumnREMOVE.setCellFactory(param -> new TableCell<Consultation, Consultation>() {
 			private final Button button = new Button("remove");
 
 			@Override
-			protected void updateItem(Parentage obj, boolean empty) {
+			protected void updateItem(Consultation obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -164,7 +177,7 @@ public class ConsultationListController implements Initializable, DataChangeList
 		});
 	}
 
-	private void removeEntity(Parentage obj) {
+	private void removeEntity(Consultation obj) {
 		Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
 		
 		if(result.get() == ButtonType.OK) {

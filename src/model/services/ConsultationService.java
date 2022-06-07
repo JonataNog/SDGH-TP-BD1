@@ -1,8 +1,11 @@
 package model.services;
 
+import java.util.List;
+
 import model.dao.ConsultationDao;
 import model.dao.DaoFactory;
 import model.entities.Consultation;
+import model.entities.Patient;
 
 public class ConsultationService {
 	
@@ -10,6 +13,14 @@ public class ConsultationService {
 	
 	public Consultation findByProtocol(Integer protocol){
 		return dao.findByProtocol(protocol);
+	}
+	
+	public List<Consultation> findAll(){
+		return dao.findAll();
+	}
+	
+	public List<Consultation> findByPatient(Patient patient){
+		return dao.findByPatient(null);
 	}
 	
 	public void saveOrUpdate(Consultation obj) {
