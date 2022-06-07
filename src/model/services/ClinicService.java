@@ -30,7 +30,7 @@ public class ClinicService {
 	private boolean cnpjInList(Clinic clinic) {
 		List<Clinic> list = dao.findAll();
 		for(Clinic obj : list) {
-			if(clinic.getCnpj() == obj.getCnpj()) {
+			if(clinic.getCnpj().equals(obj.getCnpj())) {
 				return true;
 			}
 		}

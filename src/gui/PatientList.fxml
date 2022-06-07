@@ -39,7 +39,7 @@
         <columns>
           <TableColumn fx:id="tableColumnCpf" prefWidth="102.0" text="CPF" />
             <TableColumn fx:id="tableColumnName" prefWidth="114.0" text="Name" />
-          <TableColumn fx:id="tableColumnConvenio" prefWidth="117.0" text="Convênio" />
+          <TableColumn fx:id="tableColumnConvenio" prefWidth="117.0" text="Health Insurance" />
             <TableColumn fx:id="tableColumnSex" prefWidth="56.0" text="Sex" />
             <TableColumn fx:id="tableColumnBirthDate" prefWidth="95.0" text="Birth Date" />
             <TableColumn fx:id="tableColumnEDIT" prefWidth="90.0" />

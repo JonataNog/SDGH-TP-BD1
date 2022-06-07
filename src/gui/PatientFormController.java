@@ -103,7 +103,7 @@ public class PatientFormController implements Initializable{
 	}
 
 	private Patient getFormData() {
-		Patient obj = new Patient();
+Patient obj = new Patient();
 		
 		ValidationException exception = new ValidationException("Validation error");
 		
@@ -160,6 +160,7 @@ public class PatientFormController implements Initializable{
 		Constraints.setTextFieldMaxLength(txtName, 40);
 		Constraints.setTextFieldMaxLength(txtConvenio, 30);
 		Utils.formatDatePicker(dpBirthDate, "dd/MM/yyyy");
+		
 	}
 	
 	public void updateFormData() {

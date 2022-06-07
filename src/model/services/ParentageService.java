@@ -31,7 +31,7 @@ public class ParentageService {
 	private boolean cpfsInList(Parentage parentage) {
 		List<Parentage> list = dao.findAll();
 		for(Parentage obj : list) {
-			if(parentage.getCpf() == obj.getCpf() && parentage.getPatient().getCpf() == obj.getPatient().getCpf()) {
+			if(parentage.getCpf().equals(obj.getCpf()) && parentage.getPatient().getCpf().equals(obj.getPatient().getCpf())) {
 				return true;
 			}
 		}

@@ -30,7 +30,7 @@ public class PatientService {
 	private boolean cpfInList(Patient pat) {
 		List<Patient> list = dao.findAll();
 		for(Patient obj : list) {
-			if(pat.getCpf() == obj.getCpf()) {
+			if(pat.getCpf().equals(obj.getCpf())) {
 				return true;
 			}
 		}

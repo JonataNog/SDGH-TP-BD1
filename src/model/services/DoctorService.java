@@ -30,7 +30,7 @@ public class DoctorService {
 	private boolean crmInList(Doctor doc) {
 		List<Doctor> list = dao.findAll();
 		for(Doctor obj : list) {
-			if(doc.getCrm() == obj.getCrm()) {
+			if(doc.getCrm().equals(obj.getCrm())) {
 				return true;
 			}
 		}

@@ -43,7 +43,7 @@
         <columns>
             <TableColumn fx:id="tableColumnProtocol" prefWidth="85.0" text="Protocol" />
           <TableColumn fx:id="tableColumnDate" prefWidth="102.0" text="Date" />
-            <TableColumn fx:id="tableColumnLaudo" prefWidth="109.0" text="Laudo" />
+            <TableColumn fx:id="tableColumnLaudo" prefWidth="109.0" text="Medical Report" />
             <TableColumn fx:id="tableColumnMedication" prefWidth="128.0" text="Medication" />
             <TableColumn fx:id="tableColumnDoctorName" prefWidth="103.0" text="Doctor Name" />
             <TableColumn fx:id="tableColumnClinicName" prefWidth="76.0" text="Clinic Name" />
