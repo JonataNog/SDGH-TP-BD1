@@ -2,6 +2,7 @@ package gui;
 
 import java.net.URL;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -198,7 +199,10 @@ public class ConsultationFormController implements Initializable {
 			throw new IllegalStateException("Entity was null");
 		}
 		
-		txtProtocol.setText(String.valueOf(entity.getProtocol()));;
+		txtProtocol.setText(String.valueOf(entity.getProtocol()));
+		if(entity.getDate() != null) {
+			dpDate.setValue(LocalDateTime.ofInstant(entity.getDate().toInstant(), ZoneId.systemDefault()).toLocalDate());
+		}
 		txtLaudo.setText(entity.getLaudo());
 		txtMedication.setText(entity.getMedication());
 		
