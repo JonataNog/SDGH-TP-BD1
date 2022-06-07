@@ -71,7 +71,7 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("UPDATE consulta " 
-										+ "SET data = ?, laudo = ?, medicacao = ?, crm = ?, Cpf = ?, Cnpj = ? "
+										+ "SET data = ?, laudo = ?, medicação = ?, crm = ?, Cpf = ?, Cnpj = ? "
 										+ "WHERE Protocolo = ?");
 			st.setDate(1, new Date(obj.getDate().getTime()));
 			st.setString(2, obj.getLaudo());

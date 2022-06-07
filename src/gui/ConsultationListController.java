@@ -105,19 +105,27 @@ public class ConsultationListController implements Initializable, DataChangeList
 	}
 	
 	@FXML
-	public void onBtSearchProtocolAction() {
+	public void onBtSearchProtocolAction()  {
 		try {
-			Integer protocol = Utils.tryParseToInt(txtSearchProtocol.getText());
-			Consultation obj = service.findByProtocol(protocol);
-			obsList = FXCollections.observableArrayList(obj);
-			tableViewConsultation.setItems(obsList);
-			initEditButtons();
-			initRemoveButtons();
+			if (txtSearchProtocol.getText() == null || txtSearchProtocol.getText().trim().equals("")) {
+				Alerts.showAlert("Error", "Field can't be empty",null, AlertType.ERROR);
+			}
+			else {
+				Integer protocol = Utils.tryParseToInt(txtSearchProtocol.getText());
+				Consultation obj = service.findByProtocol(protocol);
+				if (obj == null) {
+					throw new NullPointerException();
+				}
+				obsList = FXCollections.observableArrayList(obj);
+				tableViewConsultation.setItems(obsList);
+				initEditButtons();
+				initRemoveButtons();
+			}
 		}
 		catch(NullPointerException e) {
-			Alerts.showAlert("Error", "Field can't be empty",null, AlertType.ERROR);
+			Alerts.showAlert("Error", "Protocol not exist",null, AlertType.ERROR);
 		}
-		
+	
 	}
 	
 	public void onBtSearchPatientAction() {
