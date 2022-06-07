@@ -61,7 +61,7 @@ public class ConsultationListController implements Initializable, DataChangeList
 	private TableColumn<Consultation, String> tableColumnClinicName;
 	
 	@FXML
-	private TableColumn<Consultation, String> tableColumnPatientNome;
+	private TableColumn<Consultation, String> tableColumnPatientName;
 
 	@FXML
 	private TableColumn<Consultation, Consultation> tableColumnEDIT;
@@ -96,6 +96,9 @@ public class ConsultationListController implements Initializable, DataChangeList
 		Utils.formatTableColumnDate(tableColumnDate, "dd/MM/yyyy");
 		tableColumnLaudo.setCellValueFactory(new PropertyValueFactory<>("laudo"));
 		tableColumnMedication.setCellValueFactory(new PropertyValueFactory<>("medication"));
+		tableColumnDoctorName.setCellValueFactory(new PropertyValueFactory<>("doctorName"));
+		tableColumnClinicName.setCellValueFactory(new PropertyValueFactory<>("clinicName"));
+		tableColumnPatientName.setCellValueFactory(new PropertyValueFactory<>("patientName"));
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewConsultation.prefHeightProperty().bind(stage.heightProperty());

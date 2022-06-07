@@ -187,7 +187,7 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT medico.nome as NomeMedico, clinica.nome as NomeClinica, paciente.nome as NomePaciente, consulta.* "
+			st = conn.prepareStatement("SELECT medico.nome as DoctorName, clinica.nome as ClinicName, paciente.nome as PatientName, consulta.* "
 				 	+ "FROM consulta, medico, clinica, paciente "
 				 	+ "WHERE consulta.cpf = paciente.cpf and consulta.crm = medico.crm and consulta.cnpj = clinica.cnpj "
 				 	+ "ORDER BY protocolo");
@@ -199,7 +199,7 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 			Map<String, Clinic> mapClinic = new HashMap<>();
 			Map<String, Patient> mapPatient = new HashMap<>();
 			
-			if(rs.next()) {
+			while(rs.next()) {
 				Doctor doc = mapDoctor.get(rs.getString("crm"));
 				if(doc == null) {
 					doc = instantiateDoctor(rs);
@@ -229,23 +229,23 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 	private Doctor instantiateDoctor(ResultSet rs) throws SQLException{
 		Doctor obj = new Doctor();
 		obj.setCrm(rs.getString("crm"));
-		obj.setName(rs.getString("NomeMedico"));
+		obj.setName(rs.getString("DoctorName"));
 		
 		return obj;
 	}
 
 	private Patient instantiatePatient(ResultSet rs)throws SQLException {
 		Patient obj = new Patient();
-		obj.setCpf(rs.getString("Cpf"));
-		obj.setName(rs.getString("NomePaciente"));
+		obj.setCpf(rs.getString("cpf"));
+		obj.setName(rs.getString("PatientName"));
 		
-		return null;
+		return obj;
 	}
 
 	private Clinic instantiateClinic(ResultSet rs)throws SQLException {
 		Clinic obj = new Clinic();
-		obj.setCnpj(rs.getString("Cnpj"));
-		obj.setName(rs.getString("NomeClinica"));
+		obj.setCnpj(rs.getString("cnpj"));
+		obj.setName(rs.getString("ClinicName"));
 		
 		return obj;
 	}
@@ -253,11 +253,16 @@ public class ConsultationDaoJDBC implements ConsultationDao {
 
 	private Consultation instantiateConsultation(ResultSet rs, Doctor doctor, Clinic clinic, Patient patient)throws SQLException {
 		Consultation obj = new Consultation();
+		obj.setProtocol(rs.getInt("protocolo"));
 		obj.setDate(new java.util.Date(rs.getTimestamp("data").getTime()));
-		obj.setLaudo(rs.getString("Laudo"));
+		obj.setLaudo(rs.getString("laudo"));
 		obj.setMedication(rs.getString("medicação"));
 		obj.setClinic(clinic);
 		obj.setPatient(patient);
+		obj.setDoctor(doctor);
+		obj.setDoctorName(doctor);
+		obj.setPatientName(patient);
+		obj.setClinicName(clinic);
 		
 		return obj;
 	}

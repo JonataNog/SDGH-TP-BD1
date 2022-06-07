@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="469.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ConsultationListController">
+<VBox prefHeight="469.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ConsultationListController">
    <children>
       <Label text="Consultation Registration">
          <font>
@@ -29,12 +29,12 @@
             <TableColumn fx:id="tableColumnProtocol" prefWidth="85.0" text="Protocol" />
           <TableColumn fx:id="tableColumnDate" prefWidth="102.0" text="Date" />
             <TableColumn fx:id="tableColumnLaudo" prefWidth="109.0" text="Laudo" />
-            <TableColumn fx:id="tableColumnMedication" prefWidth="150.0" text="Medication" />
-            <TableColumn fx:id="tableColumnDoctorName" prefWidth="82.0" text="Doctor Name" />
-            <TableColumn fx:id="tableColumnClinicName" prefWidth="75.0" text="Clinic Name" />
-            <TableColumn fx:id="tableColumnPatientNome" prefWidth="89.0" text="Patient Name" />
-            <TableColumn fx:id="tableColumnEDIT" prefWidth="31.0" />
-            <TableColumn fx:id="tableColumnREMOVE" prefWidth="67.0" />
+            <TableColumn fx:id="tableColumnMedication" prefWidth="128.0" text="Medication" />
+            <TableColumn fx:id="tableColumnDoctorName" prefWidth="103.0" text="Doctor Name" />
+            <TableColumn fx:id="tableColumnClinicName" prefWidth="76.0" text="Clinic Name" />
+            <TableColumn fx:id="tableColumnPatientName" prefWidth="89.0" text="Patient Name" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="59.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="71.0" />
         </columns>
       </TableView>
    </children>
