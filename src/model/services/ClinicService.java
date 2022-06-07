@@ -14,6 +14,10 @@ public class ClinicService {
 		return dao.findAll();
 	}
 	
+	public Clinic findByCnpj(String cnpj) {
+		return dao.findByCnpj(cnpj);
+	}
+	
 	public void saveOrUpdate(Clinic obj) {
 		if(cnpjInList(obj)) {
 			dao.update(obj);

@@ -24,6 +24,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -34,6 +35,9 @@ import model.services.ClinicService;
 public class ClinicListController implements Initializable, DataChangeListener {
 
 	private ClinicService service;
+	
+	@FXML
+	private TextField txtSearchCnpj;
 
 	@FXML
 	private TableView<Clinic> tableViewClinic;
@@ -55,6 +59,12 @@ public class ClinicListController implements Initializable, DataChangeListener {
 
 	@FXML
 	private Button btNew;
+	
+	@FXML
+	private Button btSearchCnpj;
+	
+	@FXML
+	private Button btFindAll;
 
 	private ObservableList<Clinic> obsList;
 
@@ -63,6 +73,34 @@ public class ClinicListController implements Initializable, DataChangeListener {
 		Stage parentStage = Utils.currentStage(event);
 		Clinic obj = new Clinic();
 		createDialogForm(obj, "/gui/ClinicForm.fxml", parentStage);
+	}
+	
+	@FXML
+	public void onBtSearchCnpjAction() {
+		try {
+			if (txtSearchCnpj.getText() == null || txtSearchCnpj.getText().trim().equals("")) {
+				Alerts.showAlert("Error", "Field can't be empty",null, AlertType.ERROR);
+			}
+			else {
+				String cnpj = txtSearchCnpj.getText();
+				Clinic obj = service.findByCnpj(cnpj);
+				if (obj == null) {
+					throw new NullPointerException();
+				}
+				obsList = FXCollections.observableArrayList(obj);
+				tableViewClinic.setItems(obsList);
+				initEditButtons();
+				initRemoveButtons();
+			}
+		}
+		catch(NullPointerException e) {
+			Alerts.showAlert("Error", "Protocol not exist",null, AlertType.ERROR);
+		}
+	}
+	
+	@FXML
+	public void onBtSearchFindAllAction() {
+		updateTableView();
 	}
 
 	public void setClinicService(ClinicService service) {
